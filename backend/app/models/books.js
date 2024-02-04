@@ -5,6 +5,7 @@ const bookSchema = new Schema({
   title: String,
   publishingYear: Number,
   genres: [String],
+  cover_image: String,
   authors: [{ type: Schema.Types.ObjectId, ref: "Authors" }],
   quantity: Number,
   price: Number,

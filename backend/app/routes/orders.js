@@ -10,16 +10,6 @@ router.get(
   cacheNoStore,
   controller.getMaxTotalInYearRange
 );
-router.get(
-  "/top-3-popular-genres",
-  cacheNoStore,
-  controller.getTop3PopularGenres
-);
 router.get("/profit", cacheNoStore, controller.getProfitInRange);
-router.get(
-  "/top-5-popular-authors",
-  cacheNoStore,
-  controller.getTop5PopularAuthors
-);
 
 module.exports = router;

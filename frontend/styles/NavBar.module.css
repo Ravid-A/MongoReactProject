@@ -1,0 +1,68 @@
+/* styles/NavBar.module.css */
+
+.navBar {
+  background-color: #333;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.leftNav {
+  display: flex;
+}
+
+.navList {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+.navList li {
+  margin-right: 20px;
+  color: #fff;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.navList li:hover {
+  background-color: #555;
+}
+
+.navList a {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+}
+
+.rightNav {
+  display: flex;
+  align-items: center;
+}
+
+.cartButton {
+  background-color: #333;
+  color: #fff;
+  text-decoration: none;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.cartButton:hover {
+  background-color: #555;
+}
+
+.cartButton a {
+  color: white;
+  font-weight: bold;
+}
+
+.cartButton a:visited {
+  color: white;
+}

@@ -2,8 +2,8 @@ const services = require("../services/authors");
 
 const create = async (req, res) => {
   try {
-    const { name, country } = req.body;
-    const newAuthor = await services.create(name, country);
+    const { name, country, image } = req.body;
+    const newAuthor = await services.create(name, country, image);
     res.json(newAuthor);
   } catch (error) {
     res.status(500).json({
@@ -60,10 +60,23 @@ const getAllBooks = async (req, res) => {
   }
 };
 
+const deleteAuthor = async (req, res) => {
+  try {
+    const strId = req.params.id;
+    const deletedAuthor = await services.deleteAuthor(strId);
+    res.json(deletedAuthor);
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+};
+
 module.exports = {
   create,
   update,
   getAllAuthors,
   getAuthor,
   getAllBooks,
+  deleteAuthor,
 };

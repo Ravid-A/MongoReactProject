@@ -73,7 +73,10 @@ const getBooksByStrInTitle = async (req, res) => {
 
   try {
     const books = await services.getBooksByStrInTitle(str, pageNumber);
-    res.json(books);
+    res.json({
+      books,
+      pageCount: Math.ceil(books.length / 10),
+    });
   } catch (error) {
     res.status(500).json({
       message: error.message,
@@ -87,7 +90,10 @@ const getBooksByGenre = async (req, res) => {
 
   try {
     const books = await services.getBooksByGenre(genre, pageNumber);
-    res.json(books);
+    res.json({
+      books,
+      pageCount: Math.ceil(books.length / 10),
+    });
   } catch (error) {
     res.status(500).json({
       message: error.message,
@@ -106,7 +112,10 @@ const getBooksByPublishedInRange = async (req, res) => {
       endYear,
       pageNumber
     );
-    res.json(books);
+    res.json({
+      books,
+      pageCount: Math.ceil(books.length / 10),
+    });
   } catch (error) {
     res.status(500).json({
       message: error.message,
@@ -120,7 +129,10 @@ const getBooksByAuthorCountry = async (req, res) => {
 
   try {
     const books = await services.getBooksByAuthorCountry(country, pageNumber);
-    res.json(books);
+    res.json({
+      books,
+      pageCount: Math.ceil(books.length / 10),
+    });
   } catch (error) {
     res.status(500).json({
       message: error.message,

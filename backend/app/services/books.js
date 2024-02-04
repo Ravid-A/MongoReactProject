@@ -7,7 +7,15 @@ const authorExists = async (strId) =>
   ObjectId.isValid(strId) && !!(await Author.findOne({ _id: strId }));
 
 const create = async (book_data) => {
-  const { title, publishingYear, genres, authors, quantity, price } = book_data;
+  const {
+    title,
+    publishingYear,
+    genres,
+    cover_image,
+    authors,
+    quantity,
+    price,
+  } = book_data;
 
   for (author of authors) {
     if (!(await authorExists(author))) {
@@ -19,6 +27,7 @@ const create = async (book_data) => {
     title,
     publishingYear,
     genres,
+    cover_image,
     authors,
     quantity,
     price,
@@ -83,8 +92,6 @@ const getBooksByAuthorCountry = async (country, pageNumber) => {
     .skip((pageNumber - 1) * 10)
     .limit(10);
 };
-
-
 
 module.exports = {
   create,

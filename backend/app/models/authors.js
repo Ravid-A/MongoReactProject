@@ -4,6 +4,7 @@ const { Schema, model } = mongoose;
 const authorSchema = new Schema({
   name: String,
   country: String,
+  image: String,
   createdAt: { type: Date, default: Date.now },
 });
 

@@ -1,0 +1,44 @@
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.title {
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.image {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+.subtitle {
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.booksList {
+  list-style: none;
+  padding: 0;
+}
+
+.booksList li {
+  margin-bottom: 20px;
+  display: flex;
+}
+
+.bookDetails {
+  display: flex;
+  align-items: center;
+  margin-left: 20px;
+  font-size: 20px;
+}
+
+.bookCover {
+  max-width: 100%;
+  width: 75px;
+  height: auto;
+  margin-top: 10px;
+}

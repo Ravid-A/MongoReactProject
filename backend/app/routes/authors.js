@@ -10,4 +10,6 @@ router.get("/", cacheNoStore, controller.getAllAuthors);
 router.get("/:id", cacheNoStore, controller.getAuthor);
 router.get("/:id/books", cacheNoStore, controller.getAllBooks);
 
+router.delete("/:id", cacheNoStore, controller.deleteAuthor);
+
 module.exports = router;
