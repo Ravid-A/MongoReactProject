@@ -53,7 +53,9 @@ const getAllBooks = async (pageNumber) => {
 };
 
 const getBooksByStrInTitle = async (str, pageNumber) => {
-  return await Book.find({ title: { $regex: str, $options: "i" } })
+  return await Book.find({
+    title: { $regex: str ? "^" + str + "$" : str, $options: "i" },
+  })
     .populate("authors")
     .skip((pageNumber - 1) * 10)
     .limit(10);
@@ -86,7 +88,10 @@ const getBooksByAuthorCountry = async (country, pageNumber) => {
     },
     {
       $match: {
-        "authors.country": country,
+        "authors.country": {
+          $regex: country,
+          $options: "i",
+        },
       },
     },
   ])

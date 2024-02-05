@@ -67,7 +67,31 @@ const BooksList = () => {
           break;
         case "publishedYear":
           const years = value.split("-");
-          searchEndpoint = `published/1?startYear=${years[0]}&endYear=${years[1]}`;
+          if (years.length !== 2) {
+            console.error(
+              "Invalid year range format. Please use the format: 2000-2010"
+            );
+            return;
+          }
+
+          const startYear = parseInt(years[0]);
+          const endYear = parseInt(years[1]);
+
+          if (isNaN(startYear) || isNaN(endYear)) {
+            console.error(
+              "Invalid year range format. Please use the format: 2000-2010"
+            );
+            return;
+          }
+
+          if (startYear > endYear) {
+            console.error(
+              "Invalid year range. The start year must be less than the end year."
+            );
+            return;
+          }
+
+          searchEndpoint = `published/1?startYear=${startYear}&endYear=${endYear}`;
           break;
       }
 
@@ -169,7 +193,6 @@ const BooksList = () => {
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>All Books</h1>
-      <p>Total Pages: {pages}</p>
 
       <button
         onClick={() => setShowAddBookForm(true)}
