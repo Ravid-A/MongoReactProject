@@ -140,45 +140,6 @@ const getBooksByAuthorCountry = async (req, res) => {
   }
 };
 
-const getGenres = async (req, res) => {
-  const genres = [
-    "Fiction",
-    "Non-Fiction",
-    "Mystery/Thriller",
-    "Science Fiction",
-    "Fantasy",
-    "Romance",
-    "Historical Fiction",
-    "Horror",
-    "Adventure",
-    "Biography/Autobiography",
-    "Self-Help/Motivational",
-    "Science/Popular Science",
-    "Business/Economics",
-    "Poetry",
-    "Humor",
-    "Travel",
-    "Children's",
-    "Young Adult",
-    "Mystery/Crime",
-    "Cooking/Food",
-    "History",
-    "Religion/Spirituality",
-    "Art/Photography",
-    "Music",
-    "Sports/Recreation",
-    "Health/Fitness",
-    "Psychology",
-    "Philosophy",
-    "Technology",
-    "Education",
-  ];
-
-  return res.status(200).json({
-    genres,
-  });
-};
-
 module.exports = {
   create,
   remove,
@@ -188,5 +149,4 @@ module.exports = {
   getBooksByGenre,
   getBooksByPublishedInRange,
   getBooksByAuthorCountry,
-  getGenres,
 };

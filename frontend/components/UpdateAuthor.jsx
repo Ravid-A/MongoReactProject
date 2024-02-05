@@ -2,18 +2,21 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
+import CountryFlag from "react-country-flag";
+import Select from "react-select";
 
 import GetAPIUrl from "../helpers/GetAPIUrl";
 
 import styles from "../styles/UpdateAuthor.module.css"; // Create this CSS module
 
-const UpdateAuthor = () => {
+const UpdateAuthor = ({ countries }) => {
   const router = useRouter();
   const { id } = router.query;
 
+  const [selectedCountry, setSelectedCountry] = useState(null);
+  const [countryError, setCountryError] = useState("");
   const [author, setAuthor] = useState({
     name: "",
-    country: "",
     image: "",
   });
 
@@ -27,6 +30,12 @@ const UpdateAuthor = () => {
         }
 
         setAuthor(response.data);
+        setSelectedCountry(
+          formatCountryOption({
+            name: response.data.country,
+            code: getCountryCode(response.data.country),
+          })
+        );
       } catch (error) {
         console.error("Error fetching author:", error);
         router.push("/authors");
@@ -43,22 +52,54 @@ const UpdateAuthor = () => {
   };
 
   const handleUpdateAuthor = async (e) => {
+    if (!selectedCountry) {
+      setCountryError("Please select a country");
+      return;
+    }
+
     e.preventDefault();
 
     try {
-      await axios.put(`${GetAPIUrl()}/authors/${id}`, author);
+      await axios.put(`${GetAPIUrl()}/authors/${id}`, {
+        ...author,
+        country: selectedCountry.value,
+      });
       router.push("/authors");
     } catch (error) {
       console.error("Error updating author:", error);
     }
   };
 
+  const getCountryCode = (country) => {
+    const countryData = countries.find((c) => c.name === country);
+    return countryData ? countryData.code : "";
+  };
+
+  const formatCountry = (country) => {
+    return (
+      <div style={{ display: "flex", alignItems: "center" }}>
+        <CountryFlag
+          className="emojiFlag"
+          countryCode={country.code}
+          svg
+          style={{ marginRight: "8px", fontSize: "1.5em" }}
+        />
+        <span>{country.name}</span>
+      </div>
+    );
+  };
+
+  const formatCountryOption = (country) => ({
+    value: country.name,
+    label: formatCountry(country),
+  });
+
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Update Author</h1>
       <form className={styles.form} onSubmit={handleUpdateAuthor}>
         <label className={styles.label}>
-          Author Name:
+          Name:
           <input
             type="text"
             name="name"
@@ -68,17 +109,19 @@ const UpdateAuthor = () => {
           />
         </label>
         <label className={styles.label}>
-          Author Country:
-          <input
-            type="text"
-            name="country"
-            value={author.country}
-            onChange={handleInputChange}
-            className={styles.input}
+          Country:
+          <Select
+            options={countries.map(formatCountryOption)}
+            value={selectedCountry}
+            onChange={(selectedOption) => {
+              setSelectedCountry(selectedOption);
+              console.log(selectedOption);
+            }}
           />
+          {countryError && <p className={styles.error}>{countryError}</p>}
         </label>
         <label className={styles.label}>
-          Author Image:
+          Image:
           <input
             type="text"
             name="image"

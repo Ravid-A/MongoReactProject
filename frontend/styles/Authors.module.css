@@ -64,3 +64,8 @@
 .image {
   width: 75px;
 }
+
+.error {
+  color: red;
+  margin-top: 5px;
+}

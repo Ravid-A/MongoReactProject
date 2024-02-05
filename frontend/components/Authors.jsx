@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import Select from "react-select";
+import CountryFlag from "react-country-flag";
 
 import GetAPIUrl from "../helpers/GetAPIUrl";
 
@@ -11,9 +13,11 @@ import styles from "../styles/Authors.module.css";
 const Authors = () => {
   const router = useRouter();
   const [authors, setAuthors] = useState([]);
+  const [countries, setCountries] = useState([]);
+  const [selectedCountry, setSelectedCountry] = useState(null);
+  const [countryError, setCountryError] = useState("");
   const [newAuthor, setNewAuthor] = useState({
     name: "",
-    country: "",
     image: "",
   });
 
@@ -27,7 +31,17 @@ const Authors = () => {
       }
     };
 
+    const fetchCountries = async () => {
+      try {
+        const response = await axios.get(GetAPIUrl() + "/countries");
+        setCountries(response.data.countries);
+      } catch (error) {
+        console.error("Error fetching countries:", error);
+      }
+    };
+
     fetchAuthors();
+    fetchCountries();
   }, []);
 
   const handleInputChange = (e) => {
@@ -37,8 +51,16 @@ const Authors = () => {
   const handleCreateAuthor = async (e) => {
     e.preventDefault();
 
+    if (!selectedCountry) {
+      setCountryError("Please select a country");
+      return;
+    }
+
     try {
-      const response = await axios.post(GetAPIUrl() + "/authors", newAuthor);
+      const response = await axios.post(GetAPIUrl() + "/authors", {
+        ...newAuthor,
+        country: selectedCountry.value,
+      });
       setAuthors([...authors, response.data]);
       setNewAuthor({
         name: "",
@@ -63,12 +85,37 @@ const Authors = () => {
     }
   };
 
+  const getCountryCode = (country) => {
+    const countryData = countries.find((c) => c.name === country);
+    return countryData ? countryData.code : "";
+  };
+
+  const formatCountry = (country) => {
+    return (
+      <div style={{ display: "flex", alignItems: "center" }}>
+        <CountryFlag
+          className="emojiFlag"
+          countryCode={country.code}
+          svg
+          style={{ marginRight: "8px", fontSize: "1.5em" }}
+        />
+        <span>{country.name}</span>
+      </div>
+    );
+  };
+
+  const formatCountryOption = (country) => ({
+    value: country.name,
+    label: formatCountry(country),
+  });
+
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Authors</h1>
       <form className={styles.form} onSubmit={handleCreateAuthor}>
+        <h2 className={styles.subtitle}>Create Author</h2>
         <label className={styles.label}>
-          Author Name:
+          Name:
           <input
             type="text"
             name="name"
@@ -78,18 +125,17 @@ const Authors = () => {
           />
         </label>
         <label className={styles.label}>
-          Author Country:
-          <input
-            type="text"
-            name="country"
-            value={newAuthor.country}
-            onChange={handleInputChange}
-            className={styles.input}
+          Country:
+          <Select
+            options={countries.map(formatCountryOption)}
+            value={selectedCountry}
+            onChange={(selectedCountry) => setSelectedCountry(selectedCountry)}
           />
+          {countryError && <p className={styles.error}>{countryError}</p>}
         </label>
 
         <label className={styles.label}>
-          Author Image:
+          Image:
           <input
             type="text"
             name="image"
@@ -126,7 +172,12 @@ const Authors = () => {
               <td className={styles.cell}>
                 <Link href={`/authors/${author._id}`}>{author.name}</Link>
               </td>
-              <td className={styles.cell}>{author.country}</td>
+              <td className={styles.cell}>
+                {formatCountry({
+                  name: author.country,
+                  code: getCountryCode(author.country),
+                })}
+              </td>
               <td className={styles.cell}>
                 <button
                   onClick={() => handleUpdateAuthor(author._id)}

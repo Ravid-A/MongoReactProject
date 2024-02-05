@@ -6,7 +6,6 @@ router.post("/", cacheNoStore, controller.create);
 
 router.delete("/:id", cacheNoStore, controller.remove);
 
-router.get("/genres", cacheNoStore, controller.getGenres);
 router.get("/pages", cacheNoStore, controller.getAmountOfPages);
 router.get("/:pageNumber", cacheNoStore, controller.getAllBooks);
 router.get(

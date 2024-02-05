@@ -123,7 +123,7 @@ const BooksList = () => {
 
     const fetchGenres = async () => {
       try {
-        const response = await axios.get(`${GetAPIUrl()}/books/genres`);
+        const response = await axios.get(`${GetAPIUrl()}/genres`);
         setGenres(response.data.genres);
       } catch (error) {
         console.error("Error fetching genres:", error);
