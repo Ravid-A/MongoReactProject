@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 
-import GetAPIURL from "../helpers/getAPIURL";
+import GetAPIUrl from "../helpers/GetAPIUrl";
 
 import styles from "../styles/Author.module.css"; // Create this CSS module
 
@@ -21,7 +21,7 @@ const Author = () => {
   useEffect(() => {
     const fetchAuthor = async () => {
       try {
-        const response = await axios.get(`${GetAPIURL()}/authors/${id}`);
+        const response = await axios.get(`${GetAPIUrl()}/authors/${id}`);
 
         if (response.data === null) {
           throw new Error("Author not found");
@@ -31,7 +31,7 @@ const Author = () => {
 
         // Fetch books using the new route
         const booksResponse = await axios.get(
-          `${GetAPIURL()}/authors/${id}/books`
+          `${GetAPIUrl()}/authors/${id}/books`
         );
 
         if (booksResponse.data !== null) {
@@ -79,8 +79,8 @@ const Author = () => {
                 />
               )}
               <span className={styles.bookDetails}>
-                <strong>{book.title}</strong> - Published in{" "}
-                {book.publishingYear}
+                <strong>{book.title}</strong>
+                Published in {book.publishingYear}
               </span>
             </li>
           ))}

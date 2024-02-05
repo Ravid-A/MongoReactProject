@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 
-import GetAPIURL from "../helpers/getAPIURL";
+import GetAPIUrl from "../helpers/GetAPIUrl";
 
 import styles from "../styles/UpdateAuthor.module.css"; // Create this CSS module
 
@@ -20,7 +20,7 @@ const UpdateAuthor = () => {
   useEffect(() => {
     const fetchAuthor = async () => {
       try {
-        const response = await axios.get(`${GetAPIURL()}/authors/${id}`);
+        const response = await axios.get(`${GetAPIUrl()}/authors/${id}`);
 
         if (response.data === null) {
           throw new Error("Author not found");
@@ -46,7 +46,7 @@ const UpdateAuthor = () => {
     e.preventDefault();
 
     try {
-      await axios.put(`${GetAPIURL()}/authors/${id}`, author);
+      await axios.put(`${GetAPIUrl()}/authors/${id}`, author);
       router.push("/authors");
     } catch (error) {
       console.error("Error updating author:", error);

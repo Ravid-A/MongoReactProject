@@ -1,7 +1,13 @@
 import Author from "../../components/Author";
+import NavBar from "../../components/NavBar";
 
 const AuthorPage = () => {
-  return <Author />;
+  return (
+    <>
+      <NavBar />
+      <Author />
+    </>
+  );
 };
 
 export default AuthorPage;

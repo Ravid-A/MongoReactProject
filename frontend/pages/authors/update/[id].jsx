@@ -1,7 +1,13 @@
+import NavBar from "../../../components/NavBar";
 import UpdateAuthor from "../../../components/UpdateAuthor";
 
 const UpdateAuthorPage = () => {
-  return <UpdateAuthor />;
+  return (
+    <>
+      <NavBar />
+      <UpdateAuthor />
+    </>
+  );
 };
 
 export default UpdateAuthorPage;

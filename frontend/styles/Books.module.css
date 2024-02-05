@@ -111,3 +111,33 @@
   background-color: #e74c3c;
   margin-left: 10px;
 }
+
+.searchOptions {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.searchOptions label {
+  margin-right: 10px;
+}
+
+.searchOptions select,
+.searchOptions input {
+  padding: 8px;
+  margin-right: 10px;
+}
+
+.searchOptions button {
+  background-color: #2196f3;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  cursor: pointer;
+}
+
+/* Validation error */
+.validationError {
+  color: red;
+  margin-top: 5px;
+}

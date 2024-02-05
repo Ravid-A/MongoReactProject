@@ -4,7 +4,7 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import Link from "next/link";
 
-import GetAPIURL from "../helpers/getAPIURL";
+import GetAPIUrl from "../helpers/GetAPIUrl";
 
 import styles from "../styles/Authors.module.css";
 
@@ -14,12 +14,13 @@ const Authors = () => {
   const [newAuthor, setNewAuthor] = useState({
     name: "",
     country: "",
+    image: "",
   });
 
   useEffect(() => {
     const fetchAuthors = async () => {
       try {
-        const response = await axios.get(GetAPIURL() + "/authors");
+        const response = await axios.get(GetAPIUrl() + "/authors");
         setAuthors(response.data);
       } catch (error) {
         console.error("Error fetching authors:", error);
@@ -37,11 +38,12 @@ const Authors = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post(GetAPIURL() + "/authors", newAuthor);
+      const response = await axios.post(GetAPIUrl() + "/authors", newAuthor);
       setAuthors([...authors, response.data]);
       setNewAuthor({
         name: "",
         country: "",
+        image: "",
       });
     } catch (error) {
       console.error("Error creating author:", error);
@@ -54,7 +56,7 @@ const Authors = () => {
 
   const handleDeleteAuthor = async (authorId) => {
     try {
-      await axios.delete(`${GetAPIURL()}/authors/${authorId}`);
+      await axios.delete(`${GetAPIUrl()}/authors/${authorId}`);
       setAuthors(authors.filter((author) => author._id !== authorId));
     } catch (error) {
       console.error("Error deleting author:", error);

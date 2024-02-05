@@ -86,7 +86,7 @@ const getBooksByStrInTitle = async (req, res) => {
 
 const getBooksByGenre = async (req, res) => {
   const pageNumber = req.params.pageNumber || 1;
-  const genre = req.query.genre;
+  const genre = req.query.str;
 
   try {
     const books = await services.getBooksByGenre(genre, pageNumber);
@@ -125,7 +125,7 @@ const getBooksByPublishedInRange = async (req, res) => {
 
 const getBooksByAuthorCountry = async (req, res) => {
   const pageNumber = req.params.pageNumber || 1;
-  const country = req.query.country;
+  const country = req.query.str;
 
   try {
     const books = await services.getBooksByAuthorCountry(country, pageNumber);
