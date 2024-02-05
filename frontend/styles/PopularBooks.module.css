@@ -1,0 +1,58 @@
+/* styles/PopularBooks.module.css */
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ddd; /* Add border */
+  border-radius: 8px; /* Add border-radius for rounded corners */
+  position: relative; /* Position relative for absolute positioning of View All link */
+}
+
+.title {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.viewAll {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: #3498db;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.info {
+  margin-bottom: 20px;
+}
+
+.container ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.book {
+  width: 150px;
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+  border-radius: 8px;
+  background-color: #fff;
+  overflow: hidden;
+}
+
+.book:hover {
+  transform: scale(1.05);
+}
+
+.book img {
+  width: 150px;
+  height: 200px;
+  margin-bottom: 10px;
+}

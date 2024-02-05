@@ -1,28 +1,22 @@
 // components/NavBar.js
 import Link from "next/link";
+import { useRouter } from "next/router";
 import styles from "../styles/NavBar.module.css";
 
 const NavBar = () => {
+  const router = useRouter();
   return (
     <nav className={styles.navBar}>
       <div className={styles.leftNav}>
         <ul className={styles.navList}>
-          <li>
-            <Link href="/">Home</Link>
-          </li>
-          <li>
-            <Link href="/books">Books</Link>
-          </li>
-          <li>
-            <Link href="/authors">Authors</Link>
-          </li>
+          <li onClick={() => router.push("/")}>Home</li>
+          <li onClick={() => router.push("/books")}>Books</li>
+          <li onClick={() => router.push("/authors")}>Authors</li>
           {/* Add more links for other pages */}
         </ul>
       </div>
-      <div className={styles.rightNav}>
-        <Link href="/cart" className={styles.cartButton}>
-          Cart
-        </Link>
+      <div className={styles.rightNav} onClick={() => router.push("/cart")}>
+        Cart
       </div>
     </nav>
   );

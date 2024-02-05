@@ -98,44 +98,6 @@ const getMaxTotalInYearRange = async (startYear, endYear) => {
     });
 };
 
-const getTop3PopularGenres = async (startYear, endYear) => {
-  const genres = await Order.aggregate([
-    {
-      $unwind: "$items",
-    },
-    {
-      $lookup: {
-        from: "books", // Replace 'books' with your actual collection name for books
-        localField: "items.book",
-        foreignField: "_id",
-        as: "bookDetails",
-      },
-    },
-    {
-      $unwind: "$bookDetails",
-    },
-    {
-      $unwind: "$bookDetails.genres",
-    },
-    {
-      $group: {
-        _id: "$bookDetails.genres",
-        count: { $sum: 1 },
-      },
-    },
-    {
-      $sort: { count: -1 },
-    },
-    {
-      $limit: 3,
-    },
-  ]);
-
-  return genres.map((genre) => {
-    return genre._id;
-  });
-};
-
 const getProfitInRange = async (startYear, endYear) => {
   const orders = await Order.find({
     date: { $gte: new Date(startYear), $lte: new Date(endYear) },
@@ -148,7 +110,7 @@ const getProfitInRange = async (startYear, endYear) => {
   return profit;
 };
 
-const getTop5PopularAuthors = async (startYear, endYear) => {
+const getPopularAuthors = async (startYear, endYear) => {
   const authors = await Order.aggregate([
     {
       $unwind: "$items",
@@ -176,9 +138,6 @@ const getTop5PopularAuthors = async (startYear, endYear) => {
     {
       $sort: { count: -1 },
     },
-    {
-      $limit: 5,
-    },
   ]);
 
   const authorsDetails = [];
@@ -195,11 +154,41 @@ const getTop5PopularAuthors = async (startYear, endYear) => {
   return authorsDetails;
 };
 
+const getPopularBooks = async () => {
+  const books = await Order.aggregate([
+    {
+      $unwind: "$items",
+    },
+    {
+      $group: {
+        _id: "$items.book",
+        count: { $sum: 1 },
+      },
+    },
+    {
+      $sort: { count: -1 },
+    },
+  ]);
+
+  const booksDetails = [];
+
+  for (book of books) {
+    const bookWithDetails = await Book.findById(book._id);
+
+    booksDetails.push({
+      ...bookWithDetails.toObject(),
+      count: book.count,
+    });
+  }
+
+  return booksDetails;
+};
+
 module.exports = {
   create,
   getAll,
   getMaxTotalInYearRange,
-  getTop3PopularGenres,
   getProfitInRange,
-  getTop5PopularAuthors,
+  getPopularAuthors,
+  getPopularBooks,
 };

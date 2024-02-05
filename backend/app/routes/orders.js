@@ -11,5 +11,7 @@ router.get(
   controller.getMaxTotalInYearRange
 );
 router.get("/profit", cacheNoStore, controller.getProfitInRange);
+router.get("/popular/authors", cacheNoStore, controller.getPopularAuthors);
+router.get("/popular/books", cacheNoStore, controller.getPopularBooks);
 
 module.exports = router;

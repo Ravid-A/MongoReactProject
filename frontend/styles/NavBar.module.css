@@ -26,21 +26,30 @@
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s;
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
 }
 
 .navList li:hover {
   background-color: #555;
 }
 
-.navList a {
+.rightNav {
+  margin-right: 20px;
+  color: #fff;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
   text-decoration: none;
   color: white;
   font-weight: bold;
 }
 
-.rightNav {
-  display: flex;
-  align-items: center;
+.rightNav:hover {
+  background-color: #555;
 }
 
 .cartButton {

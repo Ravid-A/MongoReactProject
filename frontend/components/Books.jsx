@@ -49,7 +49,7 @@ const BooksList = () => {
     }
   };
 
-  const handleSearch = async () => {
+  const handleSearch = async (value) => {
     try {
       let searchEndpoint = "";
 
@@ -57,16 +57,16 @@ const BooksList = () => {
 
       switch (searchType) {
         case "title":
-          searchEndpoint = `search/1?str=${searchValue}`;
+          searchEndpoint = `search/1?str=${value}`;
           break;
         case "genre":
-          searchEndpoint = `genre/1?genre=${searchValue.value}`;
+          searchEndpoint = `genre/1?genre=${value}`;
           break;
         case "country":
-          searchEndpoint = `country/1?str=${searchValue}`;
+          searchEndpoint = `country/1?str=${value}`;
           break;
         case "publishedYear":
-          const years = searchValue.split("-");
+          const years = value.split("-");
           searchEndpoint = `published/1?startYear=${years[0]}&endYear=${years[1]}`;
           break;
       }
@@ -242,6 +242,14 @@ const BooksList = () => {
               <p className={styles.validationError}>{authorError}</p>
             )}
           </label>
+          <label>
+            Quantity:
+            <input type="number" name="quantity" />
+          </label>
+          <label>
+            Price:
+            <input type="number" name="price" />
+          </label>
           <button onClick={handleAddBook}>Add Book</button>
           <button
             style={{ marginLeft: 10 }}
@@ -269,18 +277,13 @@ const BooksList = () => {
           <label>
             Search Value:
             <br />
-            {searchType === "publishedYear" && (
-              <input
-                type="text"
-                value={searchValue}
-                onChange={(e) => setSearchValue(e.target.value)}
-                placeholder="e.g. 1990-2000"
-              />
-            )}
-            {searchType === "genre" && (
+            {searchType === "genre" ? (
               <Select
                 value={searchValue}
-                onChange={(selectedOptions) => setSearchValue(selectedOptions)}
+                onChange={(selectedOptions) => {
+                  setSearchValue(selectedOptions);
+                  handleSearch(selectedOptions.value);
+                }}
                 options={genres.map((genre) => ({
                   label: genre,
                   value: genre,
@@ -288,18 +291,22 @@ const BooksList = () => {
                 isSearchable
                 placeholder="Select or search for genres..."
               />
-            )}
-            {searchType !== "publishedYear" && searchType !== "genre" && (
+            ) : (
               <input
                 type="text"
                 value={searchValue}
-                onChange={(e) => setSearchValue(e.target.value)}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  setSearchValue(value);
+                  handleSearch(value);
+                }}
+                placeholder={
+                  searchType === "publishedYear" ? "eg. 2000-2010" : ""
+                }
               />
             )}
           </label>
         )}
-
-        <button onClick={handleSearch}>Search</button>
       </div>
 
       <ul className={styles.booksList}>
