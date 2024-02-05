@@ -60,6 +60,7 @@ const getBooksByStrInTitle = async (str, pageNumber) => {
 };
 
 const getBooksByGenre = async (genre, pageNumber) => {
+  console.log(genre);
   return await Book.find({ genres: genre })
     .populate("authors")
     .skip((pageNumber - 1) * 10)

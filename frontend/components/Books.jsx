@@ -16,17 +16,37 @@ const BooksList = () => {
     title: "",
     publishingYear: "",
     cover_image: "",
-    author: "", // New field for author
   });
   const [authors, setAuthors] = useState([]);
+  const [genres, setGenres] = useState([]);
   const [selectedAuthors, setSelectedAuthors] = useState([]);
+  const [selectedGenres, setSelectedGenres] = useState([]);
   const [searchType, setSearchType] = useState("");
   const [searchValue, setSearchValue] = useState("");
   const [authorError, setAuthorError] = useState("");
+  const [genresError, setGenresError] = useState("");
+
+  const fetchBooks = async () => {
+    try {
+      // Fetch books for the current page
+      const response = await axios.get(`${GetAPIUrl()}/books/${currentPage}`);
+      setBooks(response.data);
+
+      // Fetch the total number of pages
+      const response2 = await axios.get(`${GetAPIUrl()}/books/pages`);
+      setPages(response2.data);
+    } catch (error) {
+      console.error("Error fetching books:", error);
+    }
+  };
 
   const handleSearchTypeChange = (e) => {
     setSearchType(e.target.value);
     setSearchValue(""); // Clear previous search value when changing search type
+
+    if (e.target.value === "") {
+      fetchBooks();
+    }
   };
 
   const handleSearch = async () => {
@@ -40,13 +60,14 @@ const BooksList = () => {
           searchEndpoint = `search/1?str=${searchValue}`;
           break;
         case "genre":
-          searchEndpoint = `genre/1?str=${searchValue}`;
+          searchEndpoint = `genre/1?genre=${searchValue.value}`;
           break;
         case "country":
           searchEndpoint = `country/1?str=${searchValue}`;
           break;
         case "publishedYear":
-          searchEndpoint = `published/1?str=${searchValue}`;
+          const years = searchValue.split("-");
+          searchEndpoint = `published/1?startYear=${years[0]}&endYear=${years[1]}`;
           break;
       }
 
@@ -54,14 +75,12 @@ const BooksList = () => {
         const response = await axios.get(
           `${GetAPIUrl()}/books/${searchEndpoint}`
         );
+
+        console.log("Search results:", response.data);
         setBooks(response.data.books);
         setPages(response.data.pageCount);
       } else {
-        const response = await axios.get(`${GetAPIUrl()}/books/1`);
-        setBooks(response.data);
-
-        const response2 = await axios.get(`${GetAPIUrl()}/books/pages`);
-        setPages(response2.data);
+        fetchBooks();
       }
     } catch (error) {
       console.error("Error searching books:", error);
@@ -69,26 +88,6 @@ const BooksList = () => {
   };
 
   useEffect(() => {
-    const fetchBooks = async () => {
-      try {
-        // Fetch books for the current page
-        const response = await axios.get(`${GetAPIUrl()}/books/${currentPage}`);
-        setBooks(response.data);
-      } catch (error) {
-        console.error("Error fetching books:", error);
-      }
-    };
-
-    const fetchPages = async () => {
-      try {
-        // Fetch the total number of pages
-        const response = await axios.get(`${GetAPIUrl()}/books/pages`);
-        setPages(response.data);
-      } catch (error) {
-        console.error("Error fetching pages:", error);
-      }
-    };
-
     const fetchAuthors = async () => {
       try {
         const response = await axios.get(`${GetAPIUrl()}/authors`);
@@ -98,9 +97,18 @@ const BooksList = () => {
       }
     };
 
-    fetchPages();
+    const fetchGenres = async () => {
+      try {
+        const response = await axios.get(`${GetAPIUrl()}/books/genres`);
+        setGenres(response.data.genres);
+      } catch (error) {
+        console.error("Error fetching genres:", error);
+      }
+    };
+
     fetchBooks();
     fetchAuthors();
+    fetchGenres();
   }, [currentPage]);
 
   const handlePageChange = (newPage) => {
@@ -115,6 +123,10 @@ const BooksList = () => {
     setSelectedAuthors(selectedOptions);
   };
 
+  const handleGenreChange = (selectedOptions) => {
+    setSelectedGenres(selectedOptions);
+  };
+
   const handleAddBook = async () => {
     // Check if at least one author is selected
     if (selectedAuthors.length === 0) {
@@ -122,12 +134,19 @@ const BooksList = () => {
       return;
     }
 
+    if (selectedGenres.length === 0) {
+      setGenresError("Please select at least one genre.");
+      return;
+    }
+
     try {
-      const authorIds = selectedAuthors.map((author) => author.value);
+      const authorsIds = selectedAuthors.map((author) => author.value);
+      const genresValues = selectedGenres.map((genre) => genre.value);
 
       await axios.post(`${GetAPIUrl()}/books`, {
         ...newBook,
-        authors: authorIds,
+        authors: authorsIds,
+        genres: genresValues,
       });
 
       setShowAddBookForm(false);
@@ -190,7 +209,24 @@ const BooksList = () => {
             />
           </label>
           <label>
-            Author:
+            Genres:
+            <Select
+              value={selectedGenres}
+              onChange={handleGenreChange}
+              options={genres.map((genre) => ({
+                label: genre,
+                value: genre,
+              }))}
+              isMulti
+              isSearchable
+              placeholder="Select or search for genres..."
+            />
+            {genresError && (
+              <p className={styles.validationError}>{genresError}</p>
+            )}
+          </label>
+          <label>
+            Authors:
             <Select
               value={selectedAuthors}
               onChange={handleAuthorChange}
@@ -233,11 +269,33 @@ const BooksList = () => {
           <label>
             Search Value:
             <br />
-            <input
-              type="text"
-              value={searchValue}
-              onChange={(e) => setSearchValue(e.target.value)}
-            />
+            {searchType === "publishedYear" && (
+              <input
+                type="text"
+                value={searchValue}
+                onChange={(e) => setSearchValue(e.target.value)}
+                placeholder="e.g. 1990-2000"
+              />
+            )}
+            {searchType === "genre" && (
+              <Select
+                value={searchValue}
+                onChange={(selectedOptions) => setSearchValue(selectedOptions)}
+                options={genres.map((genre) => ({
+                  label: genre,
+                  value: genre,
+                }))}
+                isSearchable
+                placeholder="Select or search for genres..."
+              />
+            )}
+            {searchType !== "publishedYear" && searchType !== "genre" && (
+              <input
+                type="text"
+                value={searchValue}
+                onChange={(e) => setSearchValue(e.target.value)}
+              />
+            )}
           </label>
         )}
 
