@@ -141,3 +141,7 @@
   color: red;
   margin-top: 5px;
 }
+
+.searchValue {
+  width: 350px;
+}

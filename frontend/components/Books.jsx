@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import Link from "next/link";
 import Select from "react-select";
+import CountryFlag from "react-country-flag";
 
 import GetAPIUrl from "../helpers/GetAPIUrl";
 
@@ -22,6 +23,7 @@ const BooksList = () => {
   const [searchValue, setSearchValue] = useState("");
   const [authorError, setAuthorError] = useState("");
   const [genresError, setGenresError] = useState("");
+  const [countries, setCountries] = useState([]);
 
   const fetchBooks = async () => {
     try {
@@ -41,7 +43,7 @@ const BooksList = () => {
     setSearchType(e.target.value);
     setSearchValue(""); // Clear previous search value when changing search type
 
-    if (e.target.value === "") {
+    if (searchType !== "" || e.target.value === "") {
       fetchBooks();
     }
   };
@@ -146,6 +148,15 @@ const BooksList = () => {
       }
     };
 
+    const fetchCountries = async () => {
+      try {
+        const response = await axios.get(`${GetAPIUrl()}/countries`);
+        setCountries(response.data.countries);
+      } catch (error) {
+        console.error("Error fetching countries:", error);
+      }
+    };
+
     const fetchGenres = async () => {
       try {
         const response = await axios.get(`${GetAPIUrl()}/genres`);
@@ -159,6 +170,7 @@ const BooksList = () => {
     fetchBooks();
     fetchAuthors();
     fetchGenres();
+    fetchCountries();
   }, [currentPage]);
 
   const handlePageChange = (newPage) => {
@@ -219,6 +231,25 @@ const BooksList = () => {
       console.error("Error adding book:", error);
     }
   };
+
+  const formatCountry = (country) => {
+    return (
+      <div style={{ display: "flex", alignItems: "center" }}>
+        <CountryFlag
+          className="emojiFlag"
+          countryCode={country.code}
+          svg
+          style={{ marginRight: "8px", fontSize: "1.5em" }}
+        />
+        <span>{country.name}</span>
+      </div>
+    );
+  };
+
+  const formatCountryOption = (country) => ({
+    value: country.name,
+    label: formatCountry(country),
+  });
 
   return (
     <div className={styles.container}>
@@ -330,6 +361,7 @@ const BooksList = () => {
             <br />
             {searchType === "genre" ? (
               <Select
+                className={styles.searchValue}
                 value={searchValue}
                 onChange={(selectedOptions) => {
                   setSearchValue(selectedOptions);
@@ -342,8 +374,21 @@ const BooksList = () => {
                 isSearchable
                 placeholder="Select or search for genres..."
               />
+            ) : searchType === "country" ? (
+              <>
+                <Select
+                  className={styles.searchValue}
+                  options={countries.map(formatCountryOption)}
+                  value={searchValue}
+                  onChange={(selectedCountry) => {
+                    setSearchValue(selectedCountry);
+                    handleSearch(selectedCountry.value);
+                  }}
+                />
+              </>
             ) : (
               <input
+                className={styles.searchValue}
                 type="text"
                 value={searchValue}
                 onChange={(e) => {
@@ -352,7 +397,9 @@ const BooksList = () => {
                   handleSearch(value);
                 }}
                 placeholder={
-                  searchType === "publishedYear" ? "eg. 2000-2010" : ""
+                  searchType === "publishedYear"
+                    ? "e.g. 2000-2010"
+                    : "Title to search"
                 }
               />
             )}
