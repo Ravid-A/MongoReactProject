@@ -171,10 +171,12 @@ const BooksList = () => {
 
   const handleAuthorChange = (selectedOptions) => {
     setSelectedAuthors(selectedOptions);
+    setAuthorError(""); // Clear the validation error
   };
 
   const handleGenreChange = (selectedOptions) => {
     setSelectedGenres(selectedOptions);
+    setGenresError(""); // Clear the validation error
   };
 
   const handleAddBook = async () => {
@@ -207,6 +209,8 @@ const BooksList = () => {
       });
       setSelectedAuthors([]);
       setAuthorError(""); // Clear the validation error
+      setSelectedGenres([]);
+      setGenresError(""); // Clear the validation error
 
       // Refresh the book list
       const response = await axios.get(`${GetAPIUrl()}/books/${currentPage}`);

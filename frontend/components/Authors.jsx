@@ -98,6 +98,7 @@ const Authors = () => {
         country: "",
         image: "",
       });
+      setSelectedCountry(null);
     } catch (error) {
       console.error("Error creating author:", error);
     }
@@ -161,9 +162,10 @@ const Authors = () => {
             <Select
               options={countries.map(formatCountryOption)}
               value={selectedCountry}
-              onChange={(selectedCountry) =>
-                setSelectedCountry(selectedCountry)
-              }
+              onChange={(selectedCountry) => {
+                setSelectedCountry(selectedCountry);
+                setCountryError("");
+              }}
             />
             {countryError && <p className={styles.error}>{countryError}</p>}
           </label>
