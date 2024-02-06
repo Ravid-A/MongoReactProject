@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
+import Link from "next/link";
 import styles from "../styles/Book.module.css";
 
 import { useBorrowListUpdate } from "../contexts/BorrowListProvider";
@@ -93,7 +94,22 @@ const Book = () => {
           <div className={styles.bookInfo}>
             <h1>{book.title}</h1>
             <p>
-              Author: {book.authors.map((author) => author.name).join(", ")}
+              Author:{" "}
+              {book.authors.map((author, index) => (
+                <>
+                  <Link
+                    style={{
+                      color: "blue",
+                      textDecoration: "none",
+                    }}
+                    href={`/authors/${author._id}`}
+                    key={author._id}
+                  >
+                    {author.name}
+                  </Link>
+                  {index < book.authors.length - 1 && ", "}
+                </>
+              ))}
             </p>
             <p>Publishing Year: {book.publishingYear}</p>
             <p>Genres: {book.genres.join(", ")}</p>
