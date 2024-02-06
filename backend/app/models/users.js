@@ -5,7 +5,8 @@ const userSchema = new Schema({
   username: String,
   email: String,
   password: String,
-  isAdmin: { type: Boolean, default: false },
+  privilage: { type: Number, default: false },
+  created_at: { type: Date, default: Date.now },
 });
 
 const User = model("User", userSchema);

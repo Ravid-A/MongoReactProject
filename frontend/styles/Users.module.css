@@ -1,0 +1,23 @@
+/* styles/Users.module.css */
+
+.usersTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.usersTable th,
+.usersTable td {
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+}
+
+.usersTable th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+  text-align: left;
+}
+
+.usersTable button {
+  margin-right: 5px;
+}

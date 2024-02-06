@@ -255,7 +255,7 @@ const BooksList = () => {
     <div className={styles.container}>
       <h1 className={styles.title}>All Books</h1>
 
-      {user.isAdmin && (
+      {user.privilage >= 1 && (
         <button
           onClick={() => setShowAddBookForm(true)}
           className={styles.addButton}

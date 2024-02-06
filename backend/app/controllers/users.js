@@ -25,12 +25,63 @@ const login = async (req, res) => {
   }
 };
 
+const getAll = async (req, res) => {
+  try {
+    if (!req.user_data.privilage)
+      return res
+        .status(403)
+        .json({ message: "You are not authorized to perform this action" });
+
+    const users = await service.getAll(req.user_data);
+    res.status(200).json(users);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: error.message });
+  }
+};
+
 const me = async (req, res, next) => {
   return res.status(200).json(req.user_data);
+};
+
+const updateAdmin = async (req, res) => {
+  const id = req.params.id;
+  const { privilage } = req.body;
+
+  try {
+    if (!req.user_data.privilage)
+      return res
+        .status(403)
+        .json({ message: "You are not authorized to perform this action" });
+
+    const user = await service.updateAdmin(req.user_data, id, privilage);
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+const deleteUser = async (req, res) => {
+  const id = req.params.id;
+
+  try {
+    if (!req.user_data.privilage)
+      return res
+        .status(403)
+        .json({ message: "You are not authorized to perform this action" });
+
+    const user = await service.deleteUser(req.user_data, id);
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 };
 
 module.exports = {
   create,
   login,
+  getAll,
   me,
+  updateAdmin,
+  deleteUser,
 };

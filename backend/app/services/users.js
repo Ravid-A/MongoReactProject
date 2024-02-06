@@ -71,7 +71,59 @@ const login = async (user_data) => {
   return response;
 };
 
+const getAll = async (user_data) => {
+  return (await User.find()).filter(
+    (user) => user._id.toString() != user_data._id.toString()
+  );
+};
+
+const updateAdmin = async (user_data, id, privilage) => {
+  const user = await User.findById(id);
+
+  if (!user) {
+    const error = new Error("User not found");
+    error.status = 404;
+    throw error;
+  }
+
+  if (user.privilage === privilage) {
+    const error = new Error("User already has the same privilage");
+    error.status = 400;
+    throw error;
+  }
+
+  if (user.privilage >= user_data.privilage) {
+    const error = new Error("You are not authorized to perform this action");
+    error.status = 403;
+    throw error;
+  }
+
+  user.privilage = privilage;
+  return await user.save();
+};
+
+const deleteUser = async (user_data, id) => {
+  const user = await User.findById(id);
+
+  if (!user) {
+    const error = new Error("User not found");
+    error.status = 404;
+    throw error;
+  }
+
+  if (user.privilage >= user_data.privilage) {
+    const error = new Error("You are not authorized to perform this action");
+    error.status = 403;
+    throw error;
+  }
+
+  return await User.findByIdAndDelete(id);
+};
+
 module.exports = {
   create,
   login,
+  getAll,
+  updateAdmin,
+  deleteUser,
 };

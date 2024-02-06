@@ -16,6 +16,7 @@ const NavBar = () => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState({});
   const [showSubNav, setShowSubNav] = useState(false);
+  const [showAdminSubNav, setShowAdminSubNav] = useState(false);
 
   let timeout;
 
@@ -68,6 +69,37 @@ const NavBar = () => {
               <li onClick={() => router.push("/borrowlist")}>
                 Borrow List {borrowList.length > 0 && `[${borrowList.length}]`}
               </li>
+              {user.privilage >= 1 && (
+                <li
+                  onPointerEnter={() => setShowAdminSubNav(true)}
+                  onPointerLeave={() => {
+                    timeout = setTimeout(() => {
+                      setShowAdminSubNav(false);
+                    }, 100);
+                  }}
+                >
+                  Admin
+                  <ul
+                    onPointerEnter={() => {
+                      clearTimeout(timeout);
+                      setShowAdminSubNav(true);
+                    }}
+                    onPointerLeave={() => {
+                      setShowAdminSubNav(false);
+                    }}
+                    className={styles.subNavList}
+                    style={{
+                      display: showAdminSubNav ? "block" : "none",
+                      transform: "translate(-70%, 25%)",
+                    }}
+                  >
+                    <li onClick={() => router.push("/statistics")}>
+                      Statistics
+                    </li>
+                    <li onClick={() => router.push("/users")}>Users</li>
+                  </ul>
+                </li>
+              )}
               <li
                 onPointerEnter={() => setShowSubNav(true)}
                 onPointerLeave={() => {

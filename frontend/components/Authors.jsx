@@ -144,7 +144,7 @@ const Authors = () => {
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Authors</h1>
-      {user.isAdmin && (
+      {user.privilage > 0 && (
         <form className={styles.form} onSubmit={handleCreateAuthor}>
           <h2 className={styles.subtitle}>Create Author</h2>
           <label className={styles.label}>
@@ -191,7 +191,9 @@ const Authors = () => {
             <th className={styles.headerCell}>Image</th>
             <th className={styles.headerCell}>Name</th>
             <th className={styles.headerCell}>Country</th>
-            {user.isAdmin && <th className={styles.headerCell}>Actions</th>}
+            {user.privilage >= 1 && (
+              <th className={styles.headerCell}>Actions</th>
+            )}
           </tr>
         </thead>
         <tbody>
@@ -215,7 +217,7 @@ const Authors = () => {
                   code: getCountryCode(author.country),
                 })}
               </td>
-              {user.isAdmin && (
+              {user.privilage >= 1 && (
                 <td className={styles.cell}>
                   <button
                     onClick={() => handleUpdateAuthor(author._id)}
