@@ -7,15 +7,8 @@ const authorExists = async (strId) =>
   ObjectId.isValid(strId) && !!(await Author.findOne({ _id: strId }));
 
 const create = async (book_data) => {
-  const {
-    title,
-    publishingYear,
-    genres,
-    cover_image,
-    authors,
-    quantity,
-    price,
-  } = book_data;
+  const { title, publishingYear, genres, cover_image, authors, quantity } =
+    book_data;
 
   for (author of authors) {
     if (!(await authorExists(author))) {
@@ -30,7 +23,6 @@ const create = async (book_data) => {
     cover_image,
     authors,
     quantity,
-    price,
   });
 
   return await book.save();
@@ -38,6 +30,14 @@ const create = async (book_data) => {
 
 const remove = async (strId) => {
   return await Book.findByIdAndDelete(strId);
+};
+
+const getBookById = async (strId) => {
+  return await Book.findById(strId).populate("authors");
+};
+
+const getAmountOfBooks = async () => {
+  return await Book.countDocuments();
 };
 
 const getAmountOfPages = async () => {
@@ -48,8 +48,8 @@ const getAmountOfPages = async () => {
 const getAllBooks = async (pageNumber) => {
   return await Book.find()
     .populate("authors")
-    .skip((pageNumber - 1) * 10)
-    .limit(10);
+    .skip(pageNumber > 0 ? (pageNumber - 1) * 10 : 0)
+    .limit(pageNumber > 0 ? 10 : getAmountOfBooks());
 };
 
 const getBooksByStrInTitle = async (str, pageNumber) => {
@@ -101,6 +101,7 @@ const getBooksByAuthorCountry = async (country, pageNumber) => {
 module.exports = {
   create,
   remove,
+  getBookById,
   getAmountOfPages,
   getAllBooks,
   getBooksByStrInTitle,

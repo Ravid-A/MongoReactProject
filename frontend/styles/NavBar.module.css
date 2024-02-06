@@ -48,30 +48,14 @@
   font-weight: bold;
 }
 
-.rightNav:hover {
+.rightNav li:hover {
   background-color: #555;
 }
 
-.cartButton {
+.subNavList {
+  position: absolute;
   background-color: #333;
-  color: #fff;
-  text-decoration: none;
-  padding: 10px 15px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.cartButton:hover {
-  background-color: #555;
-}
-
-.cartButton a {
-  color: white;
-  font-weight: bold;
-}
-
-.cartButton a:visited {
-  color: white;
+  right: 5px;
+  width: fit-content;
+  transform: translateY(20px);
 }

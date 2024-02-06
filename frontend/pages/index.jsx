@@ -18,7 +18,7 @@ const HomePage = () => {
     const fetchPopularAuthors = async () => {
       try {
         const response = await axios.get(
-          `${GetAPIUrl()}/orders/popular/authors`
+          `${GetAPIUrl()}/borrows/popular/authors`
         );
         setAuthors(response.data);
       } catch (error) {
@@ -28,7 +28,9 @@ const HomePage = () => {
 
     const fetchPopularBooks = async () => {
       try {
-        const response = await axios.get(`${GetAPIUrl()}/orders/popular/books`);
+        const response = await axios.get(
+          `${GetAPIUrl()}/borrows/popular/books`
+        );
         setBooks(response.data);
       } catch (error) {
         console.error("Error fetching popular books:", error);

@@ -8,15 +8,12 @@ import GetAPIUrl from "../helpers/GetAPIUrl";
 import styles from "../styles/Books.module.css";
 
 const BooksList = () => {
+  const [user, setUser] = useState({});
   const [pages, setPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
   const [books, setBooks] = useState([]);
   const [showAddBookForm, setShowAddBookForm] = useState(false);
-  const [newBook, setNewBook] = useState({
-    title: "",
-    publishingYear: "",
-    cover_image: "",
-  });
+  const [newBook, setNewBook] = useState({});
   const [authors, setAuthors] = useState([]);
   const [genres, setGenres] = useState([]);
   const [selectedAuthors, setSelectedAuthors] = useState([]);
@@ -100,7 +97,6 @@ const BooksList = () => {
           `${GetAPIUrl()}/books/${searchEndpoint}`
         );
 
-        console.log("Search results:", response.data);
         setBooks(response.data.books);
         setPages(response.data.pageCount);
       } else {
@@ -121,6 +117,35 @@ const BooksList = () => {
       }
     };
 
+    const checkToken = async () => {
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        return;
+      }
+
+      try {
+        const response = await axios.get(GetAPIUrl() + "/users/me", {
+          headers: {
+            Authorization: token,
+          },
+          validateStatus: (status) => {
+            return status < 500;
+          },
+        });
+
+        if (response.status !== 200) {
+          localStorage.removeItem("token");
+          return;
+        }
+
+        setUser(response.data);
+      } catch (error) {
+        console.error("Error checking token:", error);
+        localStorage.removeItem("token");
+      }
+    };
+
     const fetchGenres = async () => {
       try {
         const response = await axios.get(`${GetAPIUrl()}/genres`);
@@ -130,6 +155,7 @@ const BooksList = () => {
       }
     };
 
+    checkToken();
     fetchBooks();
     fetchAuthors();
     fetchGenres();
@@ -194,12 +220,14 @@ const BooksList = () => {
     <div className={styles.container}>
       <h1 className={styles.title}>All Books</h1>
 
-      <button
-        onClick={() => setShowAddBookForm(true)}
-        className={styles.addButton}
-      >
-        Add Book
-      </button>
+      {user.isAdmin && (
+        <button
+          onClick={() => setShowAddBookForm(true)}
+          className={styles.addButton}
+        >
+          Add Book
+        </button>
+      )}
 
       {showAddBookForm && (
         <div className={styles.addBookForm}>
@@ -267,11 +295,7 @@ const BooksList = () => {
           </label>
           <label>
             Quantity:
-            <input type="number" name="quantity" />
-          </label>
-          <label>
-            Price:
-            <input type="number" name="price" />
+            <input type="number" name="quantity" onChange={handleInputChange} />
           </label>
           <button onClick={handleAddBook}>Add Book</button>
           <button

@@ -12,6 +12,7 @@ import styles from "../styles/Authors.module.css";
 
 const Authors = () => {
   const router = useRouter();
+  const [user, setUser] = useState({});
   const [authors, setAuthors] = useState([]);
   const [countries, setCountries] = useState([]);
   const [selectedCountry, setSelectedCountry] = useState(null);
@@ -40,6 +41,36 @@ const Authors = () => {
       }
     };
 
+    const checkToken = async () => {
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        return;
+      }
+
+      try {
+        const response = await axios.get(GetAPIUrl() + "/users/me", {
+          headers: {
+            Authorization: token,
+          },
+          validateStatus: (status) => {
+            return status < 500;
+          },
+        });
+
+        if (response.status !== 200) {
+          localStorage.removeItem("token");
+          return;
+        }
+
+        setUser(response.data);
+      } catch (error) {
+        console.error("Error checking token:", error);
+        localStorage.removeItem("token");
+      }
+    };
+
+    checkToken();
     fetchAuthors();
     fetchCountries();
   }, []);
@@ -112,49 +143,53 @@ const Authors = () => {
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Authors</h1>
-      <form className={styles.form} onSubmit={handleCreateAuthor}>
-        <h2 className={styles.subtitle}>Create Author</h2>
-        <label className={styles.label}>
-          Name:
-          <input
-            type="text"
-            name="name"
-            value={newAuthor.name}
-            onChange={handleInputChange}
-            className={styles.input}
-          />
-        </label>
-        <label className={styles.label}>
-          Country:
-          <Select
-            options={countries.map(formatCountryOption)}
-            value={selectedCountry}
-            onChange={(selectedCountry) => setSelectedCountry(selectedCountry)}
-          />
-          {countryError && <p className={styles.error}>{countryError}</p>}
-        </label>
+      {user.isAdmin && (
+        <form className={styles.form} onSubmit={handleCreateAuthor}>
+          <h2 className={styles.subtitle}>Create Author</h2>
+          <label className={styles.label}>
+            Name:
+            <input
+              type="text"
+              name="name"
+              value={newAuthor.name}
+              onChange={handleInputChange}
+              className={styles.input}
+            />
+          </label>
+          <label className={styles.label}>
+            Country:
+            <Select
+              options={countries.map(formatCountryOption)}
+              value={selectedCountry}
+              onChange={(selectedCountry) =>
+                setSelectedCountry(selectedCountry)
+              }
+            />
+            {countryError && <p className={styles.error}>{countryError}</p>}
+          </label>
 
-        <label className={styles.label}>
-          Image:
-          <input
-            type="text"
-            name="image"
-            value={newAuthor.image}
-            onChange={handleInputChange}
-            className={styles.input}
-          />
-        </label>
-        <button type="submit" className={styles.button}>
-          Create Author
-        </button>
-      </form>
+          <label className={styles.label}>
+            Image:
+            <input
+              type="text"
+              name="image"
+              value={newAuthor.image}
+              onChange={handleInputChange}
+              className={styles.input}
+            />
+          </label>
+          <button type="submit" className={styles.button}>
+            Create Author
+          </button>
+        </form>
+      )}
       <table className={styles.table}>
         <thead>
           <tr>
             <th className={styles.headerCell}>Image</th>
             <th className={styles.headerCell}>Name</th>
             <th className={styles.headerCell}>Country</th>
-            <th className={styles.headerCell}>Actions</th>
+            {user.isAdmin && <th className={styles.headerCell}>Actions</th>}
           </tr>
         </thead>
         <tbody>
@@ -178,20 +213,22 @@ const Authors = () => {
                   code: getCountryCode(author.country),
                 })}
               </td>
-              <td className={styles.cell}>
-                <button
-                  onClick={() => handleUpdateAuthor(author._id)}
-                  className={styles.button}
-                >
-                  Update
-                </button>
-                <button
-                  onClick={() => handleDeleteAuthor(author._id)}
-                  className={styles.button + " " + styles.deleteButton}
-                >
-                  Delete
-                </button>
-              </td>
+              {user.isAdmin && (
+                <td className={styles.cell}>
+                  <button
+                    onClick={() => handleUpdateAuthor(author._id)}
+                    className={styles.button}
+                  >
+                    Update
+                  </button>
+                  <button
+                    onClick={() => handleDeleteAuthor(author._id)}
+                    className={styles.button + " " + styles.deleteButton}
+                  >
+                    Delete
+                  </button>
+                </td>
+              )}
             </tr>
           ))}
         </tbody>

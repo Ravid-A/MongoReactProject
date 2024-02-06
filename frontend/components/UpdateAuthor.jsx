@@ -115,7 +115,6 @@ const UpdateAuthor = ({ countries }) => {
             value={selectedCountry}
             onChange={(selectedOption) => {
               setSelectedCountry(selectedOption);
-              console.log(selectedOption);
             }}
           />
           {countryError && <p className={styles.error}>{countryError}</p>}

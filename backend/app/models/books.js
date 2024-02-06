@@ -8,7 +8,6 @@ const bookSchema = new Schema({
   cover_image: String,
   authors: [{ type: Schema.Types.ObjectId, ref: "Authors" }],
   quantity: Number,
-  price: Number,
   createdAt: { type: Date, default: Date.now },
 });
 

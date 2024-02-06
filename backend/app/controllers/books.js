@@ -43,6 +43,19 @@ const remove = async (req, res) => {
   }
 };
 
+const getBookById = async (req, res) => {
+  const id = req.params.id;
+
+  try {
+    const book = await services.getBookById(id);
+    res.json(book);
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+};
+
 const getAmountOfPages = async (req, res) => {
   try {
     const amountOfPages = await services.getAmountOfPages();
@@ -143,6 +156,7 @@ const getBooksByAuthorCountry = async (req, res) => {
 module.exports = {
   create,
   remove,
+  getBookById,
   getAmountOfPages,
   getAllBooks,
   getBooksByStrInTitle,

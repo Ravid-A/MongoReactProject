@@ -1,0 +1,43 @@
+/* styles/BookAbout.module.css */
+
+.book-about-container {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+.book-details {
+  display: flex;
+  align-items: flex-start;
+}
+
+.book-cover {
+  max-width: 200px;
+  margin-right: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+}
+
+.book-info {
+  flex-grow: 1;
+}
+
+.book-info h1 {
+  color: #333;
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.book-info p {
+  margin: 8px 0;
+  color: #555;
+}
+
+.loading-text {
+  text-align: center;
+  font-size: 16px;
+  color: #777;
+}
