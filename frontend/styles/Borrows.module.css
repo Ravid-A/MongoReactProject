@@ -8,6 +8,7 @@
 .borrowList {
   display: grid;
   gap: 20px;
+  margin-top: 20px;
 }
 
 .emptyMessage {
@@ -15,4 +16,8 @@
   font-size: 22px;
   font-weight: bold;
   color: #777;
+}
+
+.checkbox {
+  font-size: 20px;
 }

@@ -7,8 +7,9 @@ const create = async (req, res) => {
     const response = await services.create(order, req.user_data);
     res.json(response);
   } catch (error) {
-    res.status(500).json({
+    res.status(error.status || 500).json({
       message: error.message,
+      book: error.book,
     });
   }
 };
@@ -27,9 +28,17 @@ const returnBorrow = async (req, res) => {
 };
 
 const getAllByUser = async (req, res) => {
+  const all = req.params.all == 1;
   try {
-    const orders = await services.getAllByUser(req.user_data);
-    res.json(orders);
+    let borrows = null;
+
+    if (all) {
+      borrows = await services.getAllByUserWithReturned(req.user_data);
+    } else {
+      borrows = await services.getAllByUser(req.user_data);
+    }
+
+    res.json(borrows);
   } catch (error) {
     res.status(500).json({
       message: error.message,

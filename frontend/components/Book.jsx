@@ -120,8 +120,9 @@ const Book = () => {
             <button
               onClick={handleAddToBorrowList}
               className={styles.actionButton}
+              disabled={book.quantity <= 0}
             >
-              Add to Borrow List
+              {book.quantity <= 0 ? "Out of Stock" : "Add to Borrow List"}
             </button>
           )}
         </div>

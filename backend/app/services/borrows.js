@@ -7,9 +7,10 @@ const checkBooksQuantity = async (items, books) => {
     for (book of books) {
       if (item.book === book._id.toString()) {
         if (item.amount > book.quantity) {
-          throw new Error(
-            `Not enough books in stock to buy the book '${book._id}'`
-          );
+          const error = new Error(`Not enough books in stock`);
+          error.book = book;
+          error.status = 400;
+          throw error;
         }
       }
     }
@@ -18,8 +19,12 @@ const checkBooksQuantity = async (items, books) => {
 
 const updateBooksQuantity = async (items, books) => {
   for (item of items) {
-    if (!item.amount)
-      throw new Error(`Amount for item '${item.book}' is required`);
+    if (!item.amount) {
+      const error = new Error(`Amount of books must be greater than 0`);
+      error.book = book;
+      error.status = 400;
+      throw error;
+    }
 
     for (book of books) {
       if (item.book === book._id.toString()) {
@@ -110,6 +115,17 @@ const getAllByUser = async (user_data) => {
   });
 };
 
+const getAllByUserWithReturned = async (user_data) => {
+  return await Borrow.find({ user: user_data._id }).populate({
+    path: "items.book",
+    model: "Books",
+    populate: {
+      path: "authors",
+      model: "Authors",
+    },
+  });
+};
+
 const getPopularAuthors = async (startYear, endYear) => {
   const authors = await Borrow.aggregate([
     {
@@ -187,6 +203,7 @@ const getPopularBooks = async () => {
 module.exports = {
   create,
   getAllByUser,
+  getAllByUserWithReturned,
   returnBorrow,
   getPopularAuthors,
   getPopularBooks,

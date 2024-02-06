@@ -17,6 +17,7 @@ const BorrowList = () => {
   const setBorrowList = useBorrowListUpdate();
 
   const [books, setBooks] = useState([]);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     const fetchBooks = async () => {
@@ -99,7 +100,7 @@ const BorrowList = () => {
     }
 
     try {
-      await axios.post(
+      const response = await axios.post(
         `${GetAPIUrl()}/borrows`,
         {
           books: borrowList,
@@ -108,13 +109,24 @@ const BorrowList = () => {
           headers: {
             Authorization: token,
           },
+          validateStatus: (status) => {
+            return status < 500;
+          },
         }
       );
+
+      if (response.status !== 200) {
+        setError(response.data.message + ' "' + response.data.book.title + '"');
+        return;
+      }
 
       setBorrowList([]);
       router.push("/borrowed");
     } catch (error) {
       console.error("Error borrowing books:", error);
+      setError(
+        `Internal Server Error: ${error.response.data.message || error.message}`
+      );
     }
   };
 
@@ -169,6 +181,7 @@ const BorrowList = () => {
         </>
       ) : (
         <>
+          {error && <p className={styles.error}>{error}</p>}
           <button className={styles.borrowButton} onClick={handleBorrow}>
             Borrow
           </button>

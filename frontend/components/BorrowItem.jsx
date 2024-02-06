@@ -65,6 +65,7 @@ const BorrowItem = ({ borrow, onReturn }) => {
     <div className={styles.borrowItem}>
       <h3>Borrow Date: {new Date(borrow.date).toLocaleDateString()}</h3>
       <h3>Return Date: {new Date(borrow.returnDate).toLocaleDateString()}</h3>
+      {borrow.returned && <h3>The books already been returned!</h3>}
       <ul className={styles.booksList}>
         {borrow.items.map((item) => (
           <li key={item.book._id} className={styles.bookItem}>
@@ -81,8 +82,12 @@ const BorrowItem = ({ borrow, onReturn }) => {
         ))}
       </ul>
       {error && <p className={styles.error}>{error}</p>}
-      <button className={styles.returnButton} onClick={handleReturn}>
-        Return
+      <button
+        className={styles.returnButton}
+        onClick={handleReturn}
+        disabled={borrow.returned}
+      >
+        {borrow.returned ? "Returned" : "Return"}
       </button>
     </div>
   );

@@ -5,9 +5,9 @@ const cacheNoStore = require("../middlewares/cacheNoStore");
 
 router.post("/", Authorization, controller.create);
 
-router.put("/:id/return", Authorization, controller.returnBorrow);
+router.put("/:id/return/", Authorization, controller.returnBorrow);
 
-router.get("/me", Authorization, controller.getAllByUser);
+router.get("/me/:all", Authorization, controller.getAllByUser);
 router.get("/popular/authors", cacheNoStore, controller.getPopularAuthors);
 router.get("/popular/books", cacheNoStore, controller.getPopularBooks);
 
