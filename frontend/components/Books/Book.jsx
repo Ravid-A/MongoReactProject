@@ -96,7 +96,7 @@ const Book = () => {
             <p>
               Author:{" "}
               {book.authors.map((author, index) => (
-                <>
+                <span key={author._id}>
                   <Link
                     style={{
                       color: "blue",
@@ -108,7 +108,7 @@ const Book = () => {
                     {author.name}
                   </Link>
                   {index < book.authors.length - 1 && ", "}
-                </>
+                </span>
               ))}
             </p>
             <p>Publishing Year: {book.publishingYear}</p>
