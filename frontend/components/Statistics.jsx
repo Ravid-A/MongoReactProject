@@ -171,6 +171,8 @@ const Statistics = () => {
             {book.title} - {book.precent}% of borrows
           </li>
         ))}
+
+        {popularBooks?.length === 0 && <p>No popular books</p>}
       </ul>
 
       <h2>Popular Authors</h2>
@@ -180,6 +182,8 @@ const Statistics = () => {
             {author.name} - {author.precent}% of borrows
           </li>
         ))}
+
+        {popularAuthors?.length === 0 && <p>No popular authors</p>}
       </ul>
     </div>
   );

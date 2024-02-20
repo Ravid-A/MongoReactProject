@@ -100,6 +100,7 @@ const returnBorrow = async (id, user_data) => {
   }
 
   borrowToReturn.returned = true;
+  borrowToReturn.returnedDate = new Date();
 
   return await borrowToReturn.save();
 };

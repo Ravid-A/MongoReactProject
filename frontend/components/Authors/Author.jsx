@@ -102,7 +102,9 @@ const Author = ({ countries }) => {
               )}
               <span className={styles.bookDetails}>
                 <strong>{book.title}</strong>
-                Published in {book.publishingYear}
+                <span className={styles.bookPublishingYear}>
+                  Published in {book.publishingYear}
+                </span>
               </span>
             </li>
           ))}

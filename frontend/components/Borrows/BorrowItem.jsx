@@ -63,9 +63,28 @@ const BorrowItem = ({ borrow, onReturn }) => {
 
   return (
     <div className={styles.borrowItem}>
-      <h3>Borrow Date: {new Date(borrow.date).toLocaleDateString()}</h3>
-      <h3>Return Date: {new Date(borrow.returnDate).toLocaleDateString()}</h3>
-      {borrow.returned && <h3>The books already been returned!</h3>}
+      <h3>
+        Borrow Date:{" "}
+        {new Date(borrow.date).toLocaleDateString() +
+          " " +
+          new Date(borrow.date).toLocaleTimeString()}
+      </h3>
+
+      {borrow.returned ? (
+        <h3>
+          Returned Date:{" "}
+          {new Date(borrow.returnedDate).toLocaleDateString() +
+            " " +
+            new Date(borrow.returnedDate).toLocaleTimeString()}
+        </h3>
+      ) : (
+        <h3>
+          Return Date:{" "}
+          {new Date(borrow.returnDate).toLocaleDateString() +
+            " " +
+            new Date(borrow.returnDate).toLocaleTimeString()}
+        </h3>
+      )}
       <ul className={styles.booksList}>
         {borrow.items.map((item) => (
           <li key={item.book._id} className={styles.bookItem}>

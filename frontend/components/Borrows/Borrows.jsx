@@ -59,7 +59,7 @@ const Borrows = () => {
       <h1>Your Borrows</h1>
       <label className={styles.checkbox}>
         <input value={showAll} type="checkbox" onChange={handleShowAll} />
-        Show All Returns
+        Show All Borrows
       </label>
       <div className={styles.borrowList}>
         {borrows.map((borrow) => (
