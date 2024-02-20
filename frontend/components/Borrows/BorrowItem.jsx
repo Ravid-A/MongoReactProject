@@ -79,7 +79,7 @@ const BorrowItem = ({ borrow, onReturn }) => {
         </h3>
       ) : (
         <h3>
-          Return Date:{" "}
+          Return Due Date:{" "}
           {new Date(borrow.returnDate).toLocaleDateString() +
             " " +
             new Date(borrow.returnDate).toLocaleTimeString()}
