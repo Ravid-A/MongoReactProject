@@ -1,5 +1,5 @@
 import NavBar from "../../components/NavBar";
-import Book from "../../components/Book";
+import Book from "../../components/Books/Book";
 
 const BookPage = () => {
   return (

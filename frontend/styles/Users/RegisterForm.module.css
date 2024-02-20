@@ -25,7 +25,7 @@
 
 .form label {
   display: block;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   color: #333;
   font-size: 18px;
 }
@@ -49,6 +49,7 @@
   border-radius: 4px;
   cursor: pointer;
   font-size: 20px;
+  margin-top: 15px;
 }
 
 .form button:hover {
@@ -60,4 +61,15 @@
   font-size: 20px;
   margin-bottom: 16px;
   text-align: center;
+}
+
+.Link {
+  text-decoration: none;
+  font-size: 20px;
+  color: blue;
+}
+
+.Link:visited {
+  text-decoration: none;
+  color: blue;
 }

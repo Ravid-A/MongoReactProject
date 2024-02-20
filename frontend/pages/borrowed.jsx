@@ -1,5 +1,5 @@
 import NavBar from "../components/NavBar";
-import Borrows from "../components/Borrows";
+import Borrows from "../components/Borrows/Borrows";
 
 const BorrowedPage = () => {
   return (

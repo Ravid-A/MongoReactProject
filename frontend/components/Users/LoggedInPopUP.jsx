@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import styles from "../styles/LoggedInPopUP.module.css";
+import styles from "../../styles/Users/LoggedInPopUP.module.css";
 
 export default function LoggedInPopUP({ handleDisconnect }) {
   const router = useRouter();

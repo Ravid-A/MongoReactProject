@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-import styles from "../styles/PopularBooks.module.css";
+import styles from "../../styles/MainPage/PopularBooks.module.css";
 
 const PopularBooks = ({ books }) => {
   const router = useRouter();

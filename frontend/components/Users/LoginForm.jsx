@@ -6,9 +6,9 @@ import Link from "next/link";
 
 import LoggedInPopUP from "./LoggedInPopUP";
 
-import styles from "../styles/LoginForm.module.css";
+import styles from "../../styles/Users/LoginForm.module.css";
 
-import GetAPIUrl from "../helpers/GetAPIUrl";
+import GetAPIUrl from "../../helpers/GetAPIUrl";
 
 const LoginForm = () => {
   const router = useRouter();

@@ -4,10 +4,10 @@ import { useRouter } from "next/router";
 import {
   useBorrowList,
   useBorrowListUpdate,
-} from "../contexts/BorrowListProvider";
+} from "../../contexts/BorrowListProvider";
 import axios from "axios";
-import GetAPIUrl from "../helpers/GetAPIUrl";
-import styles from "../styles/BorrowList.module.css";
+import GetAPIUrl from "../../helpers/GetAPIUrl";
+import styles from "../../styles/Borrows/BorrowList.module.css";
 import Link from "next/link";
 
 const BorrowList = () => {
@@ -171,7 +171,7 @@ const BorrowList = () => {
 
       {borrowList.length === 0 ? (
         <>
-          <p className={styles.emptyCartMessage}>Your cart is empty</p>
+          <p className={styles.emptyCartMessage}>Your list is empty</p>
           <button
             className={styles.returnButton}
             onClick={() => router.push("/")}

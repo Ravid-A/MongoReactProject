@@ -5,8 +5,8 @@ import axios from "axios";
 import GetAPIUrl from "../helpers/GetAPIUrl";
 
 import NavBar from "../components/NavBar";
-import PopularAuthors from "../components/PopularAuthors";
-import PopularBooks from "../components/PopularBooks";
+import PopularAuthors from "../components/MainPage/PopularAuthors";
+import PopularBooks from "../components/MainPage/PopularBooks";
 
 import styles from "../styles/Home.module.css";
 

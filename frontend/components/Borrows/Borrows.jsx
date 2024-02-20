@@ -1,9 +1,9 @@
 // pages/borrows.js
 import { useEffect, useState } from "react";
 import axios from "axios";
-import BorrowItem from "../components/BorrowItem";
-import GetAPIUrl from "../helpers/GetAPIUrl";
-import styles from "../styles/Borrows.module.css";
+import BorrowItem from "./BorrowItem";
+import GetAPIUrl from "../../helpers/GetAPIUrl";
+import styles from "../../styles/Borrows/Borrows.module.css";
 import { useRouter } from "next/router";
 
 const Borrows = () => {

@@ -20,6 +20,11 @@ const NavBar = () => {
 
   let timeout;
 
+  const handleLogOut = () => {
+    localStorage.removeItem("token");
+    router.push("/");
+  };
+
   const checkToken = async () => {
     const token = localStorage.getItem("token");
 
@@ -123,7 +128,8 @@ const NavBar = () => {
                   }}
                 >
                   <li onClick={() => router.push("/borrowed")}>Borrows</li>
-                  <li onClick={() => router.push("/logout")}>Logout</li>
+                  <li onClick={() => router.push("/settings")}>Settings</li>
+                  <li onClick={handleLogOut}>Logout</li>
                 </ul>
               </li>
             </>

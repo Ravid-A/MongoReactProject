@@ -5,9 +5,9 @@ import { useRouter } from "next/router";
 import CountryFlag from "react-country-flag";
 import Select from "react-select";
 
-import GetAPIUrl from "../helpers/GetAPIUrl";
+import GetAPIUrl from "../../helpers/GetAPIUrl";
 
-import styles from "../styles/UpdateAuthor.module.css"; // Create this CSS module
+import styles from "../../styles/Authors/UpdateAuthor.module.css"; // Create this CSS module
 
 const UpdateAuthor = ({ countries }) => {
   const router = useRouter();

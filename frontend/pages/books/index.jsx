@@ -1,8 +1,4 @@
-import axios from "axios";
-
-import GetAPIUrl from "../../helpers/GetAPIUrl";
-
-import Books from "../../components/Books";
+import Books from "../../components/Books/Books";
 import NavBar from "../../components/NavBar";
 
 const BooksPage = () => {

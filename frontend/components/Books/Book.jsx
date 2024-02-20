@@ -3,11 +3,11 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import styles from "../styles/Book.module.css";
+import styles from "../../styles/Books/Book.module.css";
 
-import { useBorrowListUpdate } from "../contexts/BorrowListProvider";
+import { useBorrowListUpdate } from "../../contexts/BorrowListProvider";
 
-import GetAPIUrl from "../helpers/GetAPIUrl";
+import GetAPIUrl from "../../helpers/GetAPIUrl";
 
 const Book = () => {
   const router = useRouter();

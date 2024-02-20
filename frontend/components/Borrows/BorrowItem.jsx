@@ -1,8 +1,8 @@
 // components/BorrowItem.js
 import { useState, useEffect } from "react";
 import axios from "axios";
-import GetAPIUrl from "../helpers/GetAPIUrl";
-import styles from "../styles/BorrowItem.module.css";
+import GetAPIUrl from "../../helpers/GetAPIUrl";
+import styles from "../../styles/Borrows/BorrowItem.module.css";
 import { useRouter } from "next/router";
 import Link from "next/link";
 
@@ -56,7 +56,7 @@ const BorrowItem = ({ borrow, onReturn }) => {
     const now = new Date();
     const returnDate = new Date(borrow.returnDate);
 
-    if (now > returnDate) {
+    if (now > returnDate && !borrow.returned) {
       handleReturn();
     }
   }, []);

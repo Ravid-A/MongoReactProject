@@ -2,9 +2,10 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
-import styles from "../styles/RegisterForm.module.css";
+import Link from "next/link";
+import styles from "../../styles/Users/RegisterForm.module.css";
 
-import GetAPIUrl from "../helpers/GetAPIUrl";
+import GetAPIUrl from "../../helpers/GetAPIUrl";
 
 import LoggedInPopUP from "./LoggedInPopUP";
 
@@ -150,6 +151,9 @@ const RegisterForm = () => {
             required
           />
         </label>
+        <Link className={styles.Link} href="/login">
+          Have an account? Login here
+        </Link>
         <button type="submit" disabled={loggedIn}>
           Register
         </button>

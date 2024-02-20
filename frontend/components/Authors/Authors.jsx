@@ -6,9 +6,9 @@ import Link from "next/link";
 import Select from "react-select";
 import CountryFlag from "react-country-flag";
 
-import GetAPIUrl from "../helpers/GetAPIUrl";
+import GetAPIUrl from "../../helpers/GetAPIUrl";
 
-import styles from "../styles/Authors.module.css";
+import styles from "../../styles/Authors/Authors.module.css";
 
 const Authors = () => {
   const router = useRouter();

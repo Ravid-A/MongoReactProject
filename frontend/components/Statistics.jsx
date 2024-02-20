@@ -7,7 +7,6 @@ import GetAPIUrl from "../helpers/GetAPIUrl";
 const Statistics = () => {
   const router = useRouter();
 
-  const [user, setUser] = useState(null);
   const [statistics, setStatistics] = useState(null);
   const [popularBooks, setPopularBooks] = useState(null);
   const [popularAuthors, setPopularAuthors] = useState(null);
@@ -40,8 +39,6 @@ const Statistics = () => {
           router.push("/");
           return;
         }
-
-        setUser(user);
       } catch (error) {
         console.error("An error occurred fetching user data", error);
         localStorage.removeItem("token");
@@ -167,7 +164,7 @@ const Statistics = () => {
       <h2>Popular Books</h2>
       <ul>
         {popularBooks?.map((book) => (
-          <li key={book.id}>
+          <li key={book._id}>
             {book.title} - {book.precent}% of borrows
           </li>
         ))}
@@ -176,7 +173,7 @@ const Statistics = () => {
       <h2>Popular Authors</h2>
       <ul>
         {popularAuthors?.map((author) => (
-          <li key={author.id}>
+          <li key={author._id}>
             {author.name} - {author.precent}% of borrows
           </li>
         ))}

@@ -1,4 +1,4 @@
-import RegisterForm from "../components/RegisterForm";
+import RegisterForm from "../components/Users/RegisterForm";
 import NavBar from "../components/NavBar";
 
 const RegisterPage = () => {

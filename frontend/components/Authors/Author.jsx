@@ -4,9 +4,9 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import CountryFlag from "react-country-flag";
 
-import GetAPIUrl from "../helpers/GetAPIUrl";
+import GetAPIUrl from "../../helpers/GetAPIUrl";
 
-import styles from "../styles/Author.module.css"; // Create this CSS module
+import styles from "../../styles/Authors/Author.module.css"; // Create this CSS module
 
 const Author = ({ countries }) => {
   const router = useRouter();
