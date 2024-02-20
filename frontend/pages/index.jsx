@@ -17,9 +17,7 @@ const HomePage = () => {
   useEffect(() => {
     const fetchPopularAuthors = async () => {
       try {
-        const response = await axios.get(
-          `${GetAPIUrl()}/borrows/popular/authors`
-        );
+        const response = await axios.get(`${GetAPIUrl()}/statistics/authors`);
         setAuthors(response.data);
       } catch (error) {
         console.error("Error fetching popular authors:", error);
@@ -28,9 +26,7 @@ const HomePage = () => {
 
     const fetchPopularBooks = async () => {
       try {
-        const response = await axios.get(
-          `${GetAPIUrl()}/borrows/popular/books`
-        );
+        const response = await axios.get(`${GetAPIUrl()}/statistics/books`);
         setBooks(response.data);
       } catch (error) {
         console.error("Error fetching popular books:", error);

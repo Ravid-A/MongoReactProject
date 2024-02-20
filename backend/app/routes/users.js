@@ -8,6 +8,9 @@ router.post("/login", controller.login);
 router.get("/", authorization, controller.getAll);
 router.get("/me", authorization, controller.me);
 
+router.patch("/update", authorization, controller.update);
+router.patch("/updatepassword", authorization, controller.updatePassword);
+
 router.put("/:id", authorization, controller.updateAdmin);
 
 router.delete("/:id", authorization, controller.deleteUser);

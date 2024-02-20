@@ -126,85 +126,9 @@ const getAllByUserWithReturned = async (user_data) => {
   });
 };
 
-const getPopularAuthors = async (startYear, endYear) => {
-  const authors = await Borrow.aggregate([
-    {
-      $unwind: "$items",
-    },
-    {
-      $lookup: {
-        from: "books", // Replace 'books' with your actual collection name for books
-        localField: "items.book",
-        foreignField: "_id",
-        as: "bookDetails",
-      },
-    },
-    {
-      $unwind: "$bookDetails",
-    },
-    {
-      $unwind: "$bookDetails.authors",
-    },
-    {
-      $group: {
-        _id: "$bookDetails.authors",
-        count: { $sum: 1 },
-      },
-    },
-    {
-      $sort: { count: -1 },
-    },
-  ]);
-
-  const authorsDetails = [];
-
-  for (author of authors) {
-    const authorWithDetails = await Author.findById(author._id);
-
-    authorsDetails.push({
-      ...authorWithDetails.toObject(),
-      count: author.count,
-    });
-  }
-
-  return authorsDetails;
-};
-
-const getPopularBooks = async () => {
-  const books = await Borrow.aggregate([
-    {
-      $unwind: "$items",
-    },
-    {
-      $group: {
-        _id: "$items.book",
-        count: { $sum: 1 },
-      },
-    },
-    {
-      $sort: { count: -1 },
-    },
-  ]);
-
-  const booksDetails = [];
-
-  for (book of books) {
-    const bookWithDetails = await Book.findById(book._id);
-
-    booksDetails.push({
-      ...bookWithDetails.toObject(),
-      count: book.count,
-    });
-  }
-
-  return booksDetails;
-};
-
 module.exports = {
   create,
   getAllByUser,
   getAllByUserWithReturned,
   returnBorrow,
-  getPopularAuthors,
-  getPopularBooks,
 };

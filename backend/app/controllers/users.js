@@ -44,6 +44,26 @@ const me = async (req, res, next) => {
   return res.status(200).json(req.user_data);
 };
 
+const update = async (req, res) => {
+  try {
+    const user = await service.update(req.user_data, req.body);
+    res.status(200).json(user);
+  } catch (error) {
+    const status = error.status || 500;
+    res.status(status).json({ message: error.message });
+  }
+};
+
+const updatePassword = async (req, res) => {
+  try {
+    const user = await service.updatePassword(req.user_data, req.body);
+    res.status(200).json(user);
+  } catch (error) {
+    const status = error.status || 500;
+    res.status(status).json({ message: error.message });
+  }
+};
+
 const updateAdmin = async (req, res) => {
   const id = req.params.id;
   const { privilage } = req.body;
@@ -82,6 +102,8 @@ module.exports = {
   login,
   getAll,
   me,
+  update,
+  updatePassword,
   updateAdmin,
   deleteUser,
 };

@@ -46,32 +46,8 @@ const getAllByUser = async (req, res) => {
   }
 };
 
-const getPopularAuthors = async (req, res) => {
-  try {
-    const orders = await services.getPopularAuthors();
-    res.json(orders);
-  } catch (error) {
-    res.status(500).json({
-      message: error.message,
-    });
-  }
-};
-
-const getPopularBooks = async (req, res) => {
-  try {
-    const orders = await services.getPopularBooks();
-    res.json(orders);
-  } catch (error) {
-    res.status(500).json({
-      message: error.message,
-    });
-  }
-};
-
 module.exports = {
   create,
   returnBorrow,
   getAllByUser,
-  getPopularAuthors,
-  getPopularBooks,
 };

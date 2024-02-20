@@ -3,6 +3,14 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 import Link from "next/link";
+
+import {
+  faSpinner,
+  faEye,
+  faEyeSlash,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import styles from "../../styles/Users/RegisterForm.module.css";
 
 import GetAPIUrl from "../../helpers/GetAPIUrl";
@@ -18,6 +26,9 @@ const RegisterForm = () => {
     confirm_password: "",
   });
 
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [loggedIn, setLoggedIn] = useState(false);
 
@@ -39,6 +50,7 @@ const RegisterForm = () => {
       return;
     }
 
+    setLoading(true);
     try {
       const response = await axios.post(
         `${GetAPIUrl()}/users/register`,
@@ -63,6 +75,8 @@ const RegisterForm = () => {
       }
 
       setError(`Registration error: ${error.response.data.message}`);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -114,7 +128,7 @@ const RegisterForm = () => {
             name="username"
             value={credentials.username}
             onChange={handleInputChange}
-            disabled={loggedIn}
+            disabled={loggedIn || loading}
             required
           />
         </label>
@@ -125,37 +139,54 @@ const RegisterForm = () => {
             name="email"
             value={credentials.email}
             onChange={handleInputChange}
-            disabled={loggedIn}
+            disabled={loggedIn || loading}
             required
           />
         </label>
         <label>
           Password:
           <input
-            type="password"
+            type={showPassword ? "text" : "password"}
             name="password"
             value={credentials.password}
             onChange={handleInputChange}
-            disabled={loggedIn}
+            disabled={loggedIn || loading}
             required
           />
+          <FontAwesomeIcon
+            icon={showPassword ? faEyeSlash : faEye}
+            onClick={() => setShowPassword(!showPassword)}
+          />{" "}
+          {showPassword ? "Hide" : "Show"} Password
         </label>
         <label>
           Confirm Password:
           <input
-            type="password"
+            type={showConfirmPassword ? "text" : "password"}
             name="confirm_password"
             value={credentials.confirm_password}
             onChange={handleInputChange}
-            disabled={loggedIn}
+            disabled={loggedIn || loading}
             required
           />
+          <FontAwesomeIcon
+            icon={showConfirmPassword ? faEyeSlash : faEye}
+            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+          />{" "}
+          {showConfirmPassword ? "Hide" : "Show"} Password Confirmation
         </label>
         <Link className={styles.Link} href="/login">
           Have an account? Login here
         </Link>
-        <button type="submit" disabled={loggedIn}>
-          Register
+        <button type="submit" disabled={loggedIn || loading}>
+          {loading ? (
+            <>
+              {"Registering "}
+              <FontAwesomeIcon icon={faSpinner} spinPulse />
+            </>
+          ) : (
+            "Register"
+          )}
         </button>
         {error && <p className={styles.error}>{error}</p>}
       </form>

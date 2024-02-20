@@ -1,0 +1,229 @@
+/* styles/Profile.module.css */
+
+.settings {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10rem;
+}
+
+.settings_container {
+  width: fit-content;
+  background-color: #f4f4f4;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 300px;
+  position: relative;
+}
+
+.page_title {
+  font-size: 30px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.backButton {
+  position: absolute;
+  font-size: 35px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.Titles {
+  font-weight: bold;
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: center;
+  margin-top: 5%;
+}
+
+.Title {
+  font-size: 85px;
+  color: #776e65;
+}
+
+.SubTitle {
+  font-size: 28px;
+  color: #773e65;
+  width: fit-content;
+  border: 2px solid lightcoral;
+  border-radius: 6px;
+  background: lightcoral;
+  transform: translate(90%, -50%);
+  padding: 5px;
+}
+
+.settings_form {
+  margin-top: 20px;
+}
+
+.settings_form input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.update_button {
+  width: 100%;
+  padding: 10px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.update_button:hover {
+  background-color: #45a049;
+}
+
+.delete_button {
+  width: 100%;
+  padding: 10px;
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.delete_button:hover {
+  background-color: #da190b;
+}
+
+.change_password_button {
+  width: 100%;
+  padding: 10px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.change_password_button:hover {
+  background-color: #45a049;
+}
+
+.logout_button {
+  width: 100%;
+  padding: 10px;
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.logout_button:hover {
+  background-color: #da190b;
+}
+
+.error {
+  color: red;
+  font-size: 15px;
+  margin-top: 15px;
+  text-align: center;
+}
+
+@media screen and (max-width: 1024px) {
+  .settings {
+    height: 80vh;
+    margin-top: 35px;
+  }
+
+  .settings_container {
+    padding: 20px;
+  }
+
+  .page_title {
+    font-size: 28px;
+  }
+
+  .settings_form label {
+    font-size: 20px;
+  }
+
+  .settings_form input {
+    font-size: 18px;
+  }
+
+  .update_button {
+    font-size: 20px;
+  }
+
+  .delete_button {
+    font-size: 20px;
+  }
+
+  .change_password_button {
+    font-size: 20px;
+  }
+
+  .logout_button {
+    font-size: 20px;
+  }
+
+  .backButton {
+    font-size: 35px;
+    top: 10px;
+  }
+
+  .error {
+    font-size: 18px;
+  }
+}
+
+@media screen and (max-height: 800px) {
+  .settings {
+    margin-top: 50px;
+  }
+}
+
+@media screen and (min-height: 800px) {
+  .settings_container {
+    padding: 50px;
+  }
+
+  .update_button {
+    font-size: 24px;
+  }
+
+  .delete_button {
+    font-size: 24px;
+  }
+
+  .change_password_button {
+    font-size: 24px;
+  }
+
+  .logout_button {
+    font-size: 24px;
+  }
+
+  .page_title {
+    font-size: 38px;
+  }
+
+  .settings_form label {
+    font-size: 24px;
+  }
+
+  .settings_form input {
+    font-size: 20px;
+  }
+
+  .backButton {
+    font-size: 45px;
+    top: 20px;
+    left: 30px;
+  }
+
+  .error {
+    font-size: 20px;
+  }
+}

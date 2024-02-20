@@ -15,13 +15,9 @@ const Authenticate = async (user, password) => {
 
   try {
     if (await bcryptjs.compare(password, user.password)) {
-      const access_token = jwt.sign(
-        { id: user.id, email: user.email, username: user.username },
-        process.env.JWT_TOKEN,
-        {
-          expiresIn: "30d",
-        }
-      );
+      const access_token = jwt.sign({ id: user.id }, process.env.JWT_TOKEN, {
+        expiresIn: "30d",
+      });
 
       return {
         status: 200,

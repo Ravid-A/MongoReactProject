@@ -22,6 +22,11 @@ const NavBar = () => {
 
   const handleLogOut = () => {
     localStorage.removeItem("token");
+
+    if (router.pathname === "/") {
+      return router.reload();
+    }
+
     router.push("/");
   };
 

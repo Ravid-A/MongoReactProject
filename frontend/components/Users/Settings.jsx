@@ -1,24 +1,14 @@
-import { useRouter } from "next/router";
 import { useState } from "react";
 
-import { faSpinner, faLeftLong } from "@fortawesome/free-solid-svg-icons";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import styles from "../../styles/User/Settings.module.css";
+import styles from "../../styles/Users/Settings.module.css";
 
-import DeleteAccountPopUP from "./DeleteAccountPopUP";
 import ChangePasswordPopUP from "./ChangePasswordPopUP";
 
 const Settings = ({ handleSubmit, user, setUser, loading }) => {
-  const router = useRouter();
-
-  const [popup, setPopup] = useState("none");
-
-  const handleBackButton = () => {
-    if (loading || popup !== "none") return;
-
-    router.push("/");
-  };
+  const [changePassword, setChangePassword] = useState(false);
 
   const handleChange = (event) => {
     setUser({ ...user, [event.target.id]: event.target.value, msg: "" });
@@ -28,34 +18,13 @@ const Settings = ({ handleSubmit, user, setUser, loading }) => {
     handleSubmit();
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    router.push("/");
-  };
-
   const handleChangePassword = () => {
-    setPopup("change_password");
-  };
-
-  const handleDelete = () => {
-    setPopup("delete_account");
+    setChangePassword(true);
   };
 
   return (
     <div className={styles.settings}>
       <div className={styles.settings_container}>
-        <div
-          className={styles.backButton}
-          disabled={loading || popup != "none"}
-          onClick={handleBackButton}
-        >
-          <FontAwesomeIcon icon={faLeftLong} />
-        </div>
-        <div className={styles.Titles}>
-          <div className={styles.Title}>2048</div>
-          <div className={styles.SubTitle}>Multiplayer</div>
-        </div>
-
         <h2 className={styles.page_title}>Settings</h2>
         <div className={styles.settings_form}>
           <div className={styles.settings_form}>
@@ -64,7 +33,7 @@ const Settings = ({ handleSubmit, user, setUser, loading }) => {
               id="username"
               type="text"
               onChange={handleChange}
-              disabled={loading || popup !== "none"}
+              disabled={loading || changePassword}
               placeholder={user.placeholder.username}
             />
             <label htmlFor="email">Email</label>
@@ -72,7 +41,7 @@ const Settings = ({ handleSubmit, user, setUser, loading }) => {
               id="email"
               type="text"
               onChange={handleChange}
-              disabled={loading || popup !== "none"}
+              disabled={loading || changePassword}
               placeholder={user.placeholder.email}
             />
             {user.msg && <div className={styles.error}>{user.msg}</div>}
@@ -80,7 +49,7 @@ const Settings = ({ handleSubmit, user, setUser, loading }) => {
             <button
               className={styles.update_button}
               onClick={handleUpdate}
-              disabled={loading || popup !== "none"}
+              disabled={loading || changePassword}
             >
               {loading ? (
                 <>
@@ -98,35 +67,15 @@ const Settings = ({ handleSubmit, user, setUser, loading }) => {
           <button
             className={styles.change_password_button}
             onClick={handleChangePassword}
-            disabled={loading || popup !== "none"}
+            disabled={loading || changePassword}
           >
             Change Password
           </button>
-          <br />
-          <br />
-          <button
-            className={styles.delete_button}
-            onClick={handleDelete}
-            disabled={loading || popup !== "none"}
-          >
-            Delete Account
-          </button>
-          <br />
-          <br />
-          <button
-            className={styles.logout_button}
-            onClick={handleLogout}
-            disabled={loading || popup !== "none"}
-          >
-            Logout
-          </button>
         </div>
       </div>
-      {popup === "change_password" && (
-        <ChangePasswordPopUP setPopup={setPopup} />
+      {changePassword && (
+        <ChangePasswordPopUP setChangePassword={setChangePassword} />
       )}
-
-      {popup === "delete_account" && <DeleteAccountPopUP setPopup={setPopup} />}
     </div>
   );
 };

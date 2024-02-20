@@ -73,3 +73,19 @@
   margin-bottom: 16px;
   text-align: center;
 }
+
+.showPasswordButton {
+  display: inline;
+  position: absolute;
+  background-color: transparent;
+  border: none;
+  padding: 5px;
+  cursor: pointer;
+  z-index: 100;
+  transform: translate(-115%, 20%);
+}
+
+.showPasswordButton svg {
+  font-size: 22px;
+  color: #555;
+}

@@ -28,12 +28,12 @@
   margin-bottom: 10px;
   color: #333;
   font-size: 18px;
+  margin-bottom: 24px;
 }
 
 .form input {
   width: 100%;
   padding: 14px;
-  margin-bottom: 24px;
   border: 1px solid #ddd;
   border-radius: 4px;
   box-sizing: border-box;
@@ -72,4 +72,20 @@
 .Link:visited {
   text-decoration: none;
   color: blue;
+}
+
+.showPasswordButton {
+  display: inline;
+  position: absolute;
+  background-color: transparent;
+  border: none;
+  padding: 5px;
+  cursor: pointer;
+  z-index: 100;
+  transform: translate(-115%, 20%);
+}
+
+.showPasswordButton svg {
+  font-size: 22px;
+  color: #555;
 }
