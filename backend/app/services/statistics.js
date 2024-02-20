@@ -17,7 +17,7 @@ const getStatistics = async (req, res) => {
 };
 
 const getPopularAuthors = async (req, res) => {
-  const authors = await Borrow.aggregate([
+  const borrows = await Borrow.aggregate([
     {
       $unwind: "$items",
     },
@@ -36,15 +36,42 @@ const getPopularAuthors = async (req, res) => {
       $unwind: "$bookDetails.authors",
     },
     {
-      $group: {
-        _id: "$bookDetails.authors",
-        count: { $sum: 1 },
+      $project: {
+        _id: 1,
+        author: "$bookDetails.authors",
       },
     },
     {
-      $sort: { count: -1 },
+      $group: {
+        _id: {
+          borrowId: "$_id",
+          author: "$author",
+        },
+      },
+    },
+    {
+      $project: {
+        _id: "$_id.borrowId",
+        author: "$_id.author",
+      },
     },
   ]);
+
+  const authors = borrows.reduce((acc, borrow) => {
+    const author = borrow.author;
+
+    const authorIndex = acc.findIndex(
+      (a) => a._id.toString() === author.toString()
+    );
+
+    if (authorIndex === -1) {
+      acc.push({ _id: author, count: 1 });
+    } else {
+      acc[authorIndex].count++;
+    }
+
+    return acc;
+  }, []);
 
   const amountOfBorrows = await Borrow.countDocuments();
 
@@ -55,7 +82,7 @@ const getPopularAuthors = async (req, res) => {
 
     authorsDetails.push({
       ...authorWithDetails.toObject(),
-      precent: (author.count / amountOfBorrows) * 100,
+      precent: ((author.count / amountOfBorrows) * 100).toFixed(2),
     });
   }
 
@@ -87,7 +114,7 @@ const getPopularBooks = async (req, res) => {
 
     booksDetails.push({
       ...bookWithDetails.toObject(),
-      precent: (book.count / amountOfBorrows) * 100,
+      precent: ((book.count / amountOfBorrows) * 100).toFixed(2),
     });
   }
 
