@@ -7,10 +7,12 @@ const getStatistics = async (req, res) => {
   const users = await User.countDocuments();
   const books = await Book.countDocuments();
   const authors = await Author.countDocuments();
+  const borrows = await Borrow.countDocuments();
   const statistics = {
     users,
     books,
     authors,
+    borrows,
   };
 
   return statistics;

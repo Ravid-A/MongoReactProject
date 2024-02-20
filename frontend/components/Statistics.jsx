@@ -160,6 +160,9 @@ const Statistics = () => {
       <p>
         <strong>Number of authors:</strong> {statistics?.authors || 0}
       </p>
+      <p>
+        <strong>Number of borrows:</strong> {statistics?.borrows || 0}
+      </p>
 
       <h2>Popular Books</h2>
       <ul>
