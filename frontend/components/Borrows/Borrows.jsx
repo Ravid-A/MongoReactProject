@@ -48,10 +48,8 @@ const Borrows = () => {
     fetchBorrows(showAll);
   }, []);
 
-  const handleReturn = (borrowId) => {
-    setBorrows((prevBorrows) =>
-      prevBorrows.filter((borrow) => borrow._id !== borrowId)
-    );
+  const handleReturn = () => {
+    fetchBorrows(showAll);
   };
 
   return (

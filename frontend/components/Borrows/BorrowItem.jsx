@@ -39,7 +39,7 @@ const BorrowItem = ({ borrow, onReturn }) => {
         return;
       }
 
-      onReturn(borrow._id);
+      onReturn();
     } catch (error) {
       console.error("Error returning borrow:", error);
 
