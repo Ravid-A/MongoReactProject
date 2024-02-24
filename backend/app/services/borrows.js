@@ -1,6 +1,5 @@
 const Borrow = require("../models/borrows");
 const Book = require("../models/books");
-const Author = require("../models/authors");
 
 const checkBooksQuantity = async (items, books) => {
   for (item of items) {
@@ -117,13 +116,19 @@ const getAllByUser = async (user_data) => {
 };
 
 const getAllByUserWithReturned = async (user_data) => {
-  return await Borrow.find({ user: user_data._id }).populate({
+  const borrows = await Borrow.find({ user: user_data._id }).populate({
     path: "items.book",
     model: "Books",
     populate: {
       path: "authors",
       model: "Authors",
     },
+  });
+
+  return borrows.sort((a, b) => {
+    if (a.returned && !b.returned) return 1;
+    if (!a.returned && b.returned) return -1;
+    return 0;
   });
 };
 
