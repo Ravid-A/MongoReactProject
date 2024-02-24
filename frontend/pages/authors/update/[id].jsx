@@ -4,7 +4,6 @@ import axios from "axios";
 import GetAPIUrl from "../../../helpers/GetAPIUrl";
 
 import UpdateAuthor from "../../../components/Authors/UpdateAuthor";
-import NavBar from "../../../components/NavBar";
 
 const UpdateAuthorPage = () => {
   const [countries, setCountries] = useState([]);
@@ -24,7 +23,6 @@ const UpdateAuthorPage = () => {
 
   return (
     <>
-      <NavBar />
       <UpdateAuthor countries={countries} />
     </>
   );

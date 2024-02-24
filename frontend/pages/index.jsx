@@ -4,7 +4,6 @@ import axios from "axios";
 
 import GetAPIUrl from "../helpers/GetAPIUrl";
 
-import NavBar from "../components/NavBar";
 import PopularAuthors from "../components/MainPage/PopularAuthors";
 import PopularBooks from "../components/MainPage/PopularBooks";
 
@@ -39,7 +38,6 @@ const HomePage = () => {
 
   return (
     <div className={styles.page}>
-      <NavBar />
       <div className={styles.container}>
         <h1 className={styles.heading}>Welcome to My Library</h1>
         <p className={styles.subheading}>
