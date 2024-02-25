@@ -8,6 +8,7 @@ axios.defaults.headers.common["Content-Type"] = "application/json";
 import GetAPIUrl from "../helpers/GetAPIUrl";
 
 import Settings from "../components/Users/Settings";
+import NavBar from "../components/NavBar";
 
 export default function SettingsPage() {
   const router = useRouter();
@@ -120,6 +121,8 @@ export default function SettingsPage() {
 
   return (
     <>
+      <NavBar />
+      <br />
       {user && (
         <>
           <Settings

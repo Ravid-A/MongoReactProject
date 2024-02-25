@@ -4,6 +4,7 @@ import axios from "axios";
 import GetAPIUrl from "../../helpers/GetAPIUrl";
 
 import Author from "../../components/Authors/Author";
+import NavBar from "../../components/NavBar";
 
 const AuthorPage = () => {
   const [countries, setCountries] = useState([]);
@@ -23,6 +24,8 @@ const AuthorPage = () => {
 
   return (
     <>
+      <NavBar />
+      <br />
       <Author countries={countries} />
     </>
   );

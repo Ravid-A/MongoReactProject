@@ -6,6 +6,7 @@ import GetAPIUrl from "../helpers/GetAPIUrl";
 
 import PopularAuthors from "../components/MainPage/PopularAuthors";
 import PopularBooks from "../components/MainPage/PopularBooks";
+import NavBar from "../components/NavBar";
 
 import styles from "../styles/Home.module.css";
 
@@ -38,6 +39,8 @@ const HomePage = () => {
 
   return (
     <div className={styles.page}>
+      <NavBar />
+      <br />
       <div className={styles.container}>
         <h1 className={styles.heading}>Welcome to My Library</h1>
         <p className={styles.subheading}>
